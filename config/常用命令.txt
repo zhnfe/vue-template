@@ -1,0 +1,7 @@
+生成ssh key: ssh-keygen -t rsa -f ~/.ssh/id_rsa.user_nam
+ssh config: Host github.com
+            User user_name
+            IdentityFile ~/.ssh/id_rsa.user_name
+            HostKeyAlgorithms +ssh-rsa
+            PubkeyAcceptedAlgorithms +ssh-rsa
+
