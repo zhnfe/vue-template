@@ -11,9 +11,9 @@
 <body>
     <script>
         (function () {
-            const redir = sessionStorage.getItem('r');
-            if (redir && redir !== location.href) {
-                history.replaceState(null, null, redir);
+            const r = sessionStorage.getItem('r');
+            if (r && r !== location.href) {
+                history.replaceState(null, null, r);
             }
         })();
     </script>
