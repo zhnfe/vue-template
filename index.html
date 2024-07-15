@@ -12,7 +12,7 @@
     <script>
         (function () {
             const r = decodeURIComponent(new URLSearchParams(location.search).get('r'))
-            if (r && r !== location.href) {
+            if (r.startsWith('http') && r !== location.href) {
                 history.replaceState(null, null, r);
             }
         })();
