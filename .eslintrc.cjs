@@ -17,6 +17,7 @@ module.exports = {
         'object-curly-spacing': ['error', 'always'],
         indent: ['error', 4],
         quotes: ['error', 'single'],
+        'comma-dangle': ['error', 'never'],
         'quote-props': ['error', 'as-needed'],
         // vue
         'vue/max-attributes-per-line': ['error', {
