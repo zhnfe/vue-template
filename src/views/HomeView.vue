@@ -1,5 +1,5 @@
 <template>
-    <h1 class="title">home</h1>
+    <h1 class="title">home - 1</h1>
     <router-link to="/demo">
         demo
     </router-link>
