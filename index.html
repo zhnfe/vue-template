@@ -9,15 +9,6 @@
 </head>
 
 <body>
-    <script>
-        (function () {
-            const redir = sessionStorage.getItem('redirect');
-            sessionStorage.removeItem('redirect');
-            if (redir && redir !== location.href) {
-                history.replaceState(null, null, redir);
-            }
-        })();
-    </script>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
 </body>
