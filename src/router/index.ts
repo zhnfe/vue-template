@@ -10,8 +10,17 @@ const router = createRouter({
         component: () => import('@/views/demo/DemoView.vue')
     }, {
         path: '/black-box-tab',
-        component: () => import('@/views/demo/BlackBox.vue')
+        component: () => import('@/views/demo/BlackBox.vue'),
+        meta: {
+            documentTitle: '小黑盒 tab'
+        }
     }]
 })
 
+router.beforeEach((guard) => {
+    const documentTitle = guard.meta.documentTitle || 'Vue Template'
+    if (documentTitle && typeof documentTitle === 'string') {
+        document.title = documentTitle
+    }
+})
 export default router

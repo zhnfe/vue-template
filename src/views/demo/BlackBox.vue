@@ -100,6 +100,8 @@ function handleTabClick(e: MouseEvent, index: number) {
 }
 
 .black-box {
+    max-width: 650px;
+    margin: auto;
     position: fixed;
     inset: 0;
     z-index: 2;
