@@ -11,7 +11,7 @@
 <body>
     <script>
         (function () {
-            const r = sessionStorage.getItem('r');
+            const r = decodeURIComponent(new URLSearchParams(location.search).get('r'))
             if (r && r !== location.href) {
                 history.replaceState(null, null, r);
             }
