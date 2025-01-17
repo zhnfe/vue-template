@@ -1,16 +1,22 @@
-import { fileURLToPath, URL } from 'node:url'
+// https://vitejs.dev/config/
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
-// https://vitejs.dev/config/
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig({
-    base: '/vue-template',
     plugins: [
-        vue()
+        vue(),
+        Components({
+            resolvers: [ElementPlusResolver()],
+            dts: false
+        })
     ],
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
+            '@': '/src'
         }
+    },
+    build: {
+        target: 'esnext'
     }
 })
