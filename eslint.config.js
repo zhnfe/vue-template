@@ -46,7 +46,16 @@ export default [
                 alignAttributesVertically: true,
                 ignores: []
             }],
-            'vue/singleline-html-element-content-newline': 'off'
+            'vue/singleline-html-element-content-newline': 'off',
+            'vue/html-self-closing': ['error', {
+                html: {
+                    void: 'never',
+                    normal: 'never',
+                    component: 'always'
+                },
+                svg: 'always',
+                math: 'always'
+            }]
         }
     }
 ]

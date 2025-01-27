@@ -12,7 +12,12 @@
         "dist"
     ],
     "compilerOptions": {
+        "target": "ESNext",
         "composite": true,
+        "jsx": "preserve",
+        "jsxImportSource": "vue",
+        "jsxFactory": "h",
+        "jsxFragmentFactory": "Fragment",
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
         "paths": {
             "@/*": [
