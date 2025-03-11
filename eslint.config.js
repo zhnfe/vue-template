@@ -1,9 +1,9 @@
 import pluginVue from 'eslint-plugin-vue'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import stylistic from '@stylistic/eslint-plugin'
 
 const vueConfig = defineConfigWithVueTs(
-    pluginVue.configs['flat/recommended'],
-    vueTsConfigs.recommended
+    vueTsConfigs.strict
 )
 export default [
     {
@@ -13,18 +13,27 @@ export default [
 
     {
         name: 'app/files-to-ignore',
-        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**']
+        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.nuxt/**']
     },
     ...vueConfig,
-
+    ...pluginVue.configs['flat/strongly-recommended'],
     {
         rules: {
-            semi: ['error', 'never', { beforeStatementContinuationChars: 'always' }],
-            'object-curly-spacing': ['error', 'always'],
-            indent: ['error', 4],
-            quotes: ['error', 'single'],
-            'comma-dangle': ['error', 'never'],
-            'quote-props': ['error', 'as-needed']
+            '@typescript-eslint/no-non-null-assertion': 'off',
+            '@typescript-eslint/no-explicit-any': 'off'
+        }
+    },
+    {
+        plugins: {
+            '@stylistic': stylistic
+        },
+        rules: {
+            ...stylistic.configs['recommended'].rules,
+            '@stylistic/indent': ['error', 4],
+            '@stylistic/comma-dangle': ['error', 'never'],
+            '@stylistic/quote-props': ['error', 'as-needed'],
+            '@stylistic/function-call-spacing': ['error', 'never'],
+            '@stylistic/arrow-parens': ['error', 'as-needed']
         }
     },
     {
@@ -55,7 +64,8 @@ export default [
                 },
                 svg: 'always',
                 math: 'always'
-            }]
+            }],
+            'vue/multi-word-component-names': 'off'
         }
     }
 ]
