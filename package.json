@@ -10,12 +10,13 @@
         "preview": "vite preview",
         "build-only": "vite build",
         "type-check": "vue-tsc --build --force",
-        "lint": "eslint . --fix"
+        "lint": "eslint . --fix",
+        "postinstall": "simple-git-hooks"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.0.9",
-        "element-plus": "^2.9.3",
         "es-toolkit": "^1.32.0",
+        "naive-ui": "^2.41.0",
         "pinia": "^2.3.0",
         "tailwindcss": "^4.0.12",
         "vue": "latest",
@@ -30,28 +31,26 @@
         "@vue/eslint-config-typescript": "^14.3.0",
         "@vue/tsconfig": "^0.7.0",
         "eslint": "^9.18.0",
-        "eslint-plugin-vue": "^9.32.0",
+        "eslint-plugin-vue": "^10.0.0",
         "lint-staged": "^15.3.0",
         "npm-run-all2": "^6.2.6",
         "simple-git-hooks": "^2.11.1",
         "typescript": "~5.7.3",
         "unplugin-vue-components": "^0.27.5",
         "vite": "^6.0.7",
-        "vue-tsc": "^2.2.0",
-        "yorkie": "^2.0.0"
+        "vue-tsc": "^2.2.0"
     },
     "lint-staged": {
         "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "eslint --fix"
     },
     "simple-git-hooks": {
-        "pre-commit": "pnpm lint-staged"
+        "pre-commit": "pnpm lint-staged && pnpm type-check"
     },
     "pnpm": {
         "onlyBuiltDependencies": [
             "esbuild",
             "simple-git-hooks",
-            "vue-demi",
-            "yorkie"
+            "vue-demi"
         ]
     }
 }

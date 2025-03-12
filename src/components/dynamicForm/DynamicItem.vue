@@ -2,28 +2,29 @@
     <template
         v-if="visible"
     >
-        <el-form-item
+        <n-form-item
             v-if="item.prop && !item.notForm"
             :style="{gridColumn: `span ${item.span ?? 12}`}"
-            :prop="item.prop"
+            :path="item.prop"
             :label="item.label"
-            :rules="item.rules"
+            :rule="item.rules"
         >
             <component
                 :is="components[item.el] ?? item.el"
                 v-bind="item.props"
-                v-model="modelValue[item.prop!]"
+                v-model:value="modelValue[item.prop!]"
             >
-                <template v-if="typeof item.slot === 'function'">
+                <template
+                    v-for="slot, key in item.slots"
+                    :key="key"
+                    #[key]="values"
+                >
                     <component
-                        :is="item.slot(item, modelValue)"
+                        :is="getSlotContent(slot, values)"
                     />
                 </template>
-                <template v-else>
-                    {{ item.slot }}
-                </template>
             </component>
-        </el-form-item>
+        </n-form-item>
         <component
             v-else
             :style="{gridColumn: `span ${item.span ?? 12}`}"
@@ -32,14 +33,14 @@
             v-model="modelValue[item.prop!]"
             :prop="item.prop"
         >
-            <template v-if="typeof item.slot === 'function'">
+            <template
+                v-for="slot, key in item.slots"
+                :key="key"
+                #[key]="values"
+            >
                 <component
-                    :is="item.slot(item, modelValue)"
-                    v-bind="item.props"
+                    :is="getSlotContent(slot, values)"
                 />
-            </template>
-            <template v-else>
-                {{ item.slot }}
             </template>
         </component>
     </template>
@@ -48,16 +49,17 @@
 <script lang="ts" setup>
 import { useModelValue } from '@/composables/dynamicForm/useDynamicFormData'
 import type { DynamicItem, El } from '@/types/dynamicForm'
-import { ElCard, ElInput, ElSelect, ElSwitch } from 'element-plus'
-import { computed, watch, type ComputedRef } from 'vue'
+import { NInput, NCard, NSelect, NSwitch, NRate } from 'naive-ui'
+import { computed, h, watch, type ComputedRef } from 'vue'
 import SpreadItem from './SpreadItem.vue'
 
 // elCard 的类型
 const components: Partial<Record<El, unknown>> = {
-    input: ElInput,
-    card: ElCard,
-    select: ElSelect,
-    switch: ElSwitch,
+    input: NInput,
+    card: NCard,
+    select: NSelect,
+    switch: NSwitch,
+    rate: NRate,
     spread: SpreadItem
 }
 interface Props {
@@ -81,5 +83,17 @@ if (props.item.clearOnHide) {
             modelValue.value[props.item.prop!] = undefined
         }
     })
+}
+
+const getSlotContent = (slot: unknown, value: unknown) => {
+    if (typeof slot !== 'function') {
+        return h('span', slot ?? '')
+    }
+    const content = slot(value)
+    // is vnode
+    if (typeof content === 'object') {
+        return slot(value)
+    }
+    return h('span', content ?? '')
 }
 </script>

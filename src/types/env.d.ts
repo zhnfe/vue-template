@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-/// <reference types="element-plus/global.d.ts" />
+/// <reference types="naive-ui/volar.d.ts" />
 interface ImportMetaEnv {
     readonly VITE_DOCUMENT_TITLE: string
 }

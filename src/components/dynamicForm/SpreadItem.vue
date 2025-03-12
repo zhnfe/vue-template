@@ -1,44 +1,52 @@
 <template>
-    <el-card>
+    <n-card>
         <template #header>
             <div class="flex justify-between">
                 <span>{{ title }}</span>
-                <el-button type="primary" @click="add">新增</el-button>
+                <n-button type="primary" @click="add">新增</n-button>
             </div>
         </template>
-        <el-collapse v-model="activeNames">
-            <el-collapse-item
-                v-for="item, index in modelValue[prop]"
+
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+            <div
+                v-for="_item, index in modelValue[prop]"
                 :key="Math.random() + index"
                 :name="index"
+                class="not-last:border-b-1 border-gray-200"
+                @click="open.includes(index) ? open = open.filter(item => item !== index): open.push(index)"
             >
-                <template #title>
-                    <div class="flex w-full">
-                        <span>{{ `第${index + 1}项` }}</span>
-                        <div class="ml-auto mr-6">
-                            <el-button @click="moveUp(index)">上移</el-button>
-                            <el-button @click="moveDown(index)">下移</el-button>
-                            <el-button @click="copy(index)">复制</el-button>
-                            <el-button @click="deleteItem(index)">删除</el-button>
-                        </div>
+                <div class="flex items-center w-full px-3 py-2 bg-gray-50 cursor-pointer">
+                    <div class="text-base">{{ `第${index + 1}项` }}</div>
+                    <div class="ml-auto mr-6">
+                        <n-button @click="moveUp(index)">上移</n-button>
+                        <n-button @click="moveDown(index)">下移</n-button>
+                        <n-button @click="copy(index)">复制</n-button>
+                        <n-button @click="deleteItem(index)">删除</n-button>
                     </div>
-                </template>
-                <div class="grid grid-cols-24 gap-x-6">
-                    <dynamic-item
-                        v-for="formItem, formIndex in children"
-                        :item="getFormitem(formItem, index)"
-                        :key="Math.random() + formIndex"
-                    />
                 </div>
-            </el-collapse-item>
-        </el-collapse>
-    </el-card>
+                <div
+                    class="grid transition-all"
+                    :class="open.includes(index) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+                >
+                    <div
+                        class="grid grid-cols-24 gap-x-6 px-3 overflow-hidden min-h-0"
+                    >
+                        <dynamic-item
+                            v-for="formItem, formIndex in children"
+                            :item="getFormitem(formItem, index)"
+                            :key="Math.random() + formIndex"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </n-card>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
 import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'
 import DynamicItem from './DynamicItem.vue'
 import { useModelValue } from '@/composables/dynamicForm/useDynamicFormData'
+import { ref } from 'vue'
 interface Props {
     title: string
     prop: string
@@ -50,9 +58,9 @@ const getFormitem = (item: DynamicItemType, index: number) => {
         prop: `${props.prop}[${index}].${item.prop}`
     }
 }
+const open = ref([])
 const { modelValue } = useModelValue()
 const props = defineProps<Props>()
-const activeNames = ref<number[]>(0)
 const add = () => {
     if (!Array.isArray(modelValue.value[props.prop])) {
         modelValue.value[props.prop] = [{}]
@@ -60,11 +68,9 @@ const add = () => {
         return
     }
     modelValue.value[props.prop].push({})
-    // activeNames.value.push(modelValue.value[props.prop].length - 1)
 }
 const deleteItem = (index: number) => {
     modelValue.value[props.prop].splice(index, 1)
-    // activeNames.value = activeNames.value.filter(item => item !== index)
 }
 
 const moveUp = (index: number) => {
@@ -79,6 +85,7 @@ const moveDown = (index: number) => {
     modelValue.value[props.prop][index] = modelValue.value[props.prop][index + 1]
     modelValue.value[props.prop][index + 1] = temp
 }
+
 const copy = (index: number) => {
     modelValue.value[props.prop].splice(index, 0, { ...modelValue.value[props.prop][index] })
 }

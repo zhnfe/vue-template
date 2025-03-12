@@ -1,15 +1,14 @@
-import type { VNode } from 'vue'
-import {} from 'element-plus'
-type ElementEl = 'input' | 'card' | 'switch'
+import type { VNodeChild } from 'vue'
+type NaiveEl = 'input' | 'card' | 'switch' | 'rate'
 type CustomEl = 'spread'
-export type El = ElementEl | CustomEl | keyof HTMLElementTagNameMap
+export type El = NaiveEl | CustomEl | keyof HTMLElementTagNameMap
 
 interface ItemBase {
     span?: number
     el: El
     props?: Record<string, unknown>
     visible?(model: Record<string, unknown>): boolean
-    slot?: string | number | ((...args: unknown[]) => VNode)
+    slots?: Record<string, VNodeChild | (<T extends never>(scoped: T) => VNodeChild)>
     key?: string
 }
 

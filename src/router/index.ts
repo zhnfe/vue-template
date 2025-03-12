@@ -1,8 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'notFound',
+        component: () => import('@/views/NotFound.vue')
+    },
     {
         path: '/',
+        name: 'home',
         component: () => import('@/views/HomeView.vue'),
         meta: {
             documentTitle: 'Home'
@@ -10,6 +16,7 @@ const routes = [
     },
     {
         path: '/demo',
+        name: 'demo',
         component: () => import('@/views/DemoView.vue'),
         meta: {
             documentTitle: 'Demo'

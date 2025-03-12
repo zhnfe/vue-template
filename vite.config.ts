@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
     plugins: [
@@ -11,7 +11,9 @@ export default defineConfig({
         vueJsx(),
         tailwindcss(),
         Components({
-            resolvers: [ElementPlusResolver({ importStyle: false })],
+            resolvers: [
+                NaiveUiResolver()
+            ],
             dts: false
         })
     ],

@@ -1,10 +1,10 @@
 <template>
-    <el-form
+    <n-form
         class="grid grid-cols-24 gap-x-6"
         ref="form"
         v-bind="$attrs"
         :model="model"
-        :label-position="labelPosition"
+        :labn-position="labelPosition"
     >
         <dynamic-item
             v-for="item in config"
@@ -12,16 +12,16 @@
             :item="item"
         />
         <div v-if="showSaveButton" class="text-right mt-6 col-span-24">
-            <el-button type="primary" @click="submit">Submit</el-button>
+            <n-button type="primary" @click="submit">Submit</n-button>
         </div>
-    </el-form>
+    </n-form>
 </template>
 
 <script lang="ts" setup>
 import { useTemplateRef } from 'vue'
 import DynamicItem from './DynamicItem.vue'
 import { useInjectFormData } from '@/composables/dynamicForm/useDynamicFormData'
-import { ElMessage } from 'element-plus'
+import { message } from '@/utils'
 interface Props {
     labelPosition?: 'top' | 'left' | 'right'
     showSaveButton?: boolean
@@ -43,7 +43,7 @@ const submit = async () => {
         if (e instanceof Error) {
             return
         }
-        ElMessage.error('Please fill in the form correctly')
+        message.error('Please fill in the form correctly')
     }
 }
 </script>
