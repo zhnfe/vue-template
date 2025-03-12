@@ -1,6 +1,6 @@
 <template>
     <n-form
-        class="grid grid-cols-24 gap-x-6"
+        class="grid items-start grid-cols-24 gap-x-6"
         ref="form"
         v-bind="$attrs"
         :model="model"

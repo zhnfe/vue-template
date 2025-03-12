@@ -52,15 +52,16 @@ import type { DynamicItem, El } from '@/types/dynamicForm'
 import { NInput, NCard, NSelect, NSwitch, NRate } from 'naive-ui'
 import { computed, h, watch, type ComputedRef } from 'vue'
 import SpreadItem from './SpreadItem.vue'
+import DraggableItem from './DraggableItem.vue'
 
-// elCard 的类型
 const components: Partial<Record<El, unknown>> = {
     input: NInput,
     card: NCard,
     select: NSelect,
     switch: NSwitch,
     rate: NRate,
-    spread: SpreadItem
+    spread: SpreadItem,
+    drag: DraggableItem
 }
 interface Props {
     item: DynamicItem

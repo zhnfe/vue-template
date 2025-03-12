@@ -1,6 +1,6 @@
 import type { VNodeChild } from 'vue'
 type NaiveEl = 'input' | 'card' | 'switch' | 'rate'
-type CustomEl = 'spread'
+type CustomEl = 'spread' | 'drag'
 export type El = NaiveEl | CustomEl | keyof HTMLElementTagNameMap
 
 interface ItemBase {

@@ -67,7 +67,7 @@ export const formConfig: DynamicItem[] = [
     },
     {
         span: 24,
-        el: 'spread',
+        el: 'drag',
         prop: 'spreadTest',
         notForm: true,
         visible: (model: Record<string, any>) => {
@@ -75,51 +75,52 @@ export const formConfig: DynamicItem[] = [
         },
         clearOnHide: true,
         props: {
-            title: 'Spread Component',
+            title: 'Outer',
             children: [
-                {
-                    el: 'input',
-                    label: 'Spread Input 1',
-                    prop: 'input1',
-                    rules: stringRule
-                },
+                // {
+                //     el: 'input',
+                //     label: 'Spread Input 1',
+                //     prop: 'input1',
+                //     rules: stringRule
+                // },
                 {
                     el: 'switch',
                     label: 'spread switch',
-                    prop: 'spreadSwitch',
+                    prop: 'spread1',
                     props: {
-                        activeText: 'open',
-                        inactiveText: 'close',
-                        inlinePrompt: true
-                    }
-                },
-                {
-                    span: 24,
-                    el: 'spread',
-                    prop: 'spreadTest',
-                    notForm: true,
-                    props: {
-                        title: 'Spread Component Nested',
-                        children: [
-                            {
-                                el: 'input',
-                                label: 'Spread Input 1',
-                                prop: 'input1',
-                                rules: stringRule
-                            },
-                            {
-                                el: 'switch',
-                                label: 'spread switch',
-                                prop: 'spreadSwitch',
-                                props: {
-                                    activeText: 'open',
-                                    inactiveText: 'close',
-                                    inlinePrompt: true
-                                }
-                            }
-                        ]
+                        // 'onUpdateValue'(value) {
+                        //     console.log('******', value)
+                        // }
+                        value: true
                     }
                 }
+                // {
+                //     span: 24,
+                //     el: 'drag',
+                //     prop: 'spreadInner',
+                //     notForm: true,
+                //     props: {
+                //         title: 'Inner',
+                //         children: [
+                //             {
+                //                 el: 'input',
+                //                 label: 'Spread Input 1',
+                //                 prop: 'input1',
+                //                 rules: stringRule
+                //             },
+                //             {
+                //                 el: 'switch',
+                //                 label: 'spread switch',
+                //                 prop: 'spreadSwitch',
+                //                 props: {
+                //                     activeText: 'open',
+                //                     inactiveText: 'close',
+                //                     inlinePrompt: true
+                //                 }
+                //             }
+                //         ]
+                //     }
+                // }
             ]
         }
     }

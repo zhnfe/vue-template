@@ -10,32 +10,32 @@
         <div class="border border-gray-200 rounded-xl overflow-hidden">
             <div
                 v-for="_item, index in modelValue[prop]"
-                :key="Math.random() + index"
+                :key="index"
                 :name="index"
                 class="not-last:border-b-1 border-gray-200"
-                @click="open.includes(index) ? open = open.filter(item => item !== index): open.push(index)"
             >
-                <div class="flex items-center w-full px-3 py-2 bg-gray-50 cursor-pointer">
+                <div
+                    class="flex items-center w-full px-3 py-2 bg-gray-50 cursor-pointer select-none"
+                    @click="onTitleClick(index)"
+                >
+                    <i class="i-icon-right transition-all" :class="open.includes(index) ? 'rotate-90' : ''"></i>
                     <div class="text-base">{{ `第${index + 1}项` }}</div>
-                    <div class="ml-auto mr-6">
-                        <n-button @click="moveUp(index)">上移</n-button>
-                        <n-button @click="moveDown(index)">下移</n-button>
-                        <n-button @click="copy(index)">复制</n-button>
-                        <n-button @click="deleteItem(index)">删除</n-button>
+                    <div class="ml-auto">
+                        <n-button :disabled="index === 0" @click.stop="moveUp(index)">上移</n-button>
+                        <n-button :disabled="index === modelValue[prop].length - 1" @click.stop="moveDown(index)">下移</n-button>
+                        <n-button @click.stop="copy(index)">复制</n-button>
+                        <n-button @click.stop="deleteItem(index)">删除</n-button>
                     </div>
                 </div>
-                <div
-                    class="grid transition-all"
-                    :class="open.includes(index) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
-                >
-                    <div
-                        class="grid grid-cols-24 gap-x-6 px-3 overflow-hidden min-h-0"
-                    >
-                        <dynamic-item
-                            v-for="formItem, formIndex in children"
-                            :item="getFormitem(formItem, index)"
-                            :key="Math.random() + formIndex"
-                        />
+                <div class="grid transition-all" :class="open.includes(index) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'">
+                    <div class="overflow-hidden">
+                        <div class="grid grid-cols-24 gap-x-6 px-3 my-3">
+                            <dynamic-item
+                                v-for="formItem, formIndex in children"
+                                :item="getFormitem(formItem, index)"
+                                :key="formIndex"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@ const getFormitem = (item: DynamicItemType, index: number) => {
         prop: `${props.prop}[${index}].${item.prop}`
     }
 }
-const open = ref([])
+const open = ref([0])
 const { modelValue } = useModelValue()
 const props = defineProps<Props>()
 const add = () => {
@@ -88,5 +88,14 @@ const moveDown = (index: number) => {
 
 const copy = (index: number) => {
     modelValue.value[props.prop].splice(index, 0, { ...modelValue.value[props.prop][index] })
+}
+
+const onTitleClick = (index: number) => {
+    if (open.value.includes(index)) {
+        open.value = open.value.filter(i => i !== index)
+    }
+    else {
+        open.value.push(index)
+    }
 }
 </script>

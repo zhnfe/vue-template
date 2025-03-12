@@ -5,9 +5,6 @@
             @submit="onSubmit"
         />
     </n-card>
-    <div>
-        <div></div>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -16,7 +13,7 @@ import DynamicForm from '@/components/dynamicForm/DynamicForm.vue'
 import { formConfig } from '@/config/testForm'
 import { useDynamicFormData } from '@/composables/dynamicForm/useDynamicFormData'
 const formData = useDynamicFormData({
-    model: { switchTest: true, spreadTest: [{}, {}] },
+    model: { switchTest: true, spreadTest: [{ id: '1' }, { id: '2' }] },
     config: formConfig
 })
 
