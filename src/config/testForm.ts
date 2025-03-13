@@ -10,14 +10,48 @@ const options = reactive([
 
 export const formConfig: DynamicItem[] = [
     {
-        span: 24,
-        el: 'h1',
-        props: {
-            class: 'text-center w-full'
-        },
-        slots: {
-            default: 'h1 slotssss'
-        }
+        el: 'switch',
+        label: 'Show Group',
+        path: 'showGroup'
+    },
+    {
+        el: 'group',
+        path: 'group',
+        notForm: true,
+        children: [
+            {
+                el: 'input',
+                label: 'group item 1',
+                path: 'itme1',
+                rules: stringRule
+            },
+            {
+                span: 24,
+                el: 'drag',
+                path: 'spread',
+                notForm: true,
+                visible: (model: Record<string, any>) => {
+                    return model.switchTest
+                },
+                clearOnHide: true,
+                title: 'Human Configuration',
+                children: [
+                    {
+                        el: 'input',
+                        label: 'Spread Input',
+                        path: 'input',
+                        rules: stringRule
+                    },
+                    {
+                        el: 'switch',
+                        label: 'spread switch',
+                        path: 'switch'
+                    }
+                ]
+            }
+        ],
+        visible: model => model.showGroup,
+        clearOnHide: true
     },
     {
         span: 24,
@@ -75,7 +109,6 @@ export const formConfig: DynamicItem[] = [
         }
     },
     {
-        span: 24,
         el: 'drag',
         path: 'spreadTest',
         notForm: true,
@@ -83,49 +116,44 @@ export const formConfig: DynamicItem[] = [
             return model.switchTest
         },
         clearOnHide: true,
-        props: {
-            title: 'Outer',
-            children: [
-                {
-                    el: 'input',
-                    label: 'Spread Input',
-                    path: 'spreadNested.input',
-                    rules: stringRule
-                },
-                {
-                    el: 'switch',
-                    label: 'spread switch',
-                    path: 'spread1'
-                },
-                {
-                    span: 24,
-                    el: 'drag',
-                    path: 'spreadInner',
-                    notForm: true,
-                    props: {
-                        title: 'Inner',
-                        children: [
-                            {
-                                el: 'input',
-                                label: 'Spread Input 1',
-                                path: 'input1',
-                                rules: stringRule
-                            },
-                            {
-                                el: 'switch',
-                                label: 'spread switch',
-                                path: 'spreadSwitch',
-                                props: {
-                                    activeText: 'open',
-                                    inactiveText: 'close',
-                                    inlinePrompt: true
-                                }
-                            }
-                        ]
+        title: 'Human Configuration',
+        children: [
+            {
+                el: 'input',
+                label: 'Spread Input',
+                path: 'spreadNested.input',
+                rules: stringRule
+            },
+            {
+                el: 'switch',
+                label: 'spread switch',
+                path: 'spread1'
+            },
+            {
+                el: 'drag',
+                path: 'spreadInner',
+                notForm: true,
+                title: 'Test Inner Configuration',
+                children: [
+                    {
+                        el: 'input',
+                        label: 'Spread Input 1',
+                        path: 'input1',
+                        rules: stringRule
+                    },
+                    {
+                        el: 'switch',
+                        label: 'spread switch',
+                        path: 'spreadSwitch',
+                        props: {
+                            activeText: 'open',
+                            inactiveText: 'close',
+                            inlinePrompt: true
+                        }
                     }
-                }
-            ]
-        }
+                ]
+            }
+        ]
     }
 
 ]

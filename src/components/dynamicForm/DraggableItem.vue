@@ -1,50 +1,50 @@
 <template>
-    <div class="">
-        <div class="text-base flex items-center mb-3">
-            <span class="text-lg">{{ title }}</span>
-            <i
-                v-if="!modelValue[path]?.length"
-                class="i-AddCircleOutlined ml-5 cursor-pointer"
-                style="width: 1.5em"
-                @click="add"
-            ></i>
-        </div>
-        <draggable
-            v-model="modelValue[path]"
-            :item-key="dynamicFormIdKey"
-            ghost-class="bg-gray-100"
-        >
-            <template #item="{ index }">
-                <div :class="dragBorderClass" class="mb-8 p-4 rounded-lg relative">
-                    <div :class="operateIconClass" class="bottom-0 bg-gray-200 font-bold text-xs">
-                        {{ index }}
-                    </div>
-                    <div :class="operateIconClass" class="gap-x-1.5 bottom-0 right-5 bg-white">
-                        <i
-                            v-if="index === modelValue[path].length - 1"
-                            class="i-AddCircleOutlined"
-                            @click="add"
-                        ></i>
-                        <i class="i-DeleteRound" @click.stop="deleteItem(index)"></i>
-                        <i class="i-FileCopyRound" @click.stop="copy(index)"></i>
-                    </div>
-                    <div class="grid grid-cols-24 gap-x-6 px-3 my-3">
-                        <dynamic-item
-                            v-for="formItem, formIndex in children"
-                            :item="getFormitem(formItem, index)"
-                            :key="formIndex"
-                        />
-                    </div>
+    <draggable
+        v-model="modelValue[path]"
+        :item-key="dynamicFormIdKey"
+        ghost-class="bg-gray-100"
+    >
+        <template #header>
+            <div class="text-base flex items-center mb-3">
+                <span class="text-lg">{{ title }}</span>
+                <i
+                    v-if="!modelValue[path]?.length"
+                    class="i-AddCircleOutlined ml-5 cursor-pointer"
+                    style="width: 1.5em"
+                    @click="add"
+                ></i>
+            </div>
+        </template>
+        <template #item="{ index }">
+            <div :class="dragBorderClass" class="mb-8 p-4 rounded-lg relative">
+                <div :class="operateIconClass" class="bottom-0 bg-gray-200 font-bold text-xs">
+                    {{ index }}
                 </div>
-            </template>
-        </draggable>
-    </div>
+                <div :class="operateIconClass" class="gap-x-1.5 bottom-0 right-5 bg-white">
+                    <i
+                        v-if="index === modelValue[path].length - 1"
+                        class="i-AddCircleOutlined cursor-pointer"
+                        @click="add"
+                    ></i>
+                    <i class="i-DeleteRound cursor-pointer" @click.stop="deleteItem(index)"></i>
+                    <i class="i-FileCopyRound cursor-pointer" @click.stop="copy(index)"></i>
+                </div>
+                <div class="grid grid-cols-24 gap-x-6 px-3 my-3">
+                    <dynamic-item
+                        v-for="formItem, formIndex in children"
+                        :item="getFormitem(formItem, index)"
+                        :key="formIndex"
+                    />
+                </div>
+            </div>
+        </template>
+    </draggable>
 </template>
 <script lang="ts" setup>
 import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'
 import DynamicItem from './DynamicItem.vue'
 import draggable from 'vuedraggable'
-import { dynamicFormIdKey, useModelValue } from '@/composables/dynamicForm/useDynamic'
+import { dynamicFormIdKey, useModelValue } from '@/composables/dynamicForm'
 import { useInjectId } from '@/utils'
 import { cloneDeep } from 'es-toolkit'
 interface Props {
@@ -56,7 +56,7 @@ const dragBorderClass = 'border border-dashed border-gray-300'
 const operateIconClass = `
     absolute ${dragBorderClass}
     px-4 py-1 flex items-center rounded-full
-    cursor-pointer translate-y-1/2
+    translate-y-1/2
 `
 const getFormitem = (item: DynamicItemType, index: number) => {
     return {

@@ -45,7 +45,7 @@
 <script lang="ts" setup>
 import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'
 import DynamicItem from './DynamicItem.vue'
-import { useModelValue } from '@/composables/dynamicForm/useDynamic'
+import { useModelValue } from '@/composables/dynamicForm'
 import { ref } from 'vue'
 interface Props {
     title: string

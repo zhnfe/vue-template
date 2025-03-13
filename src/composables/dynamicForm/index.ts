@@ -40,6 +40,9 @@ export const useInjectFormData = () => {
     return inject<DynamicFormData>('formData')!
 }
 
+export const useSetModel = (model: DynamicFormData['model'], data: AnyObject) => {
+    Object.assign(model, useInjectArrayItemId(data))
+}
 export const useModelValue = () => {
     const { model } = useInjectFormData()
     const modelValue = computed({

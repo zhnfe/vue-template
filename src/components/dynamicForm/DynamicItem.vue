@@ -1,10 +1,8 @@
 <template>
-    <template
-        v-if="visible"
-    >
+    <template v-if="visible">
         <n-form-item
             v-if="item.path && !item.notForm"
-            :style="{gridColumn: `span ${item.span ?? 24}`}"
+            :style="{gridColumn: `span ${item.span ?? defaultSapn}`}"
             :path="item.path"
             :label="item.label"
             :rule="item.rules"
@@ -27,11 +25,13 @@
         </n-form-item>
         <component
             v-else
-            :style="{gridColumn: `span ${item.span ?? 12}`}"
-            :is="components[item.el] ?? item.el"
-            v-bind="item.props"
             v-model="modelValue[item.path!]"
+            v-bind="item.props"
+            :style="{gridColumn: `span ${item.span ?? defaultSapn}`}"
+            :is="components[item.el] ?? item.el"
             :path="item.path"
+            :children="item.children"
+            :title="item.title"
         >
             <template
                 v-for="slot, key in item.slots"
@@ -47,12 +47,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useModelValue } from '@/composables/dynamicForm/useDynamic'
+import { useModelValue } from '@/composables/dynamicForm'
 import type { DynamicItem, El } from '@/types/dynamicForm'
 import { NInput, NCard, NSelect, NSwitch, NRate } from 'naive-ui'
 import { computed, h, watch, type ComputedRef } from 'vue'
 import SpreadItem from './SpreadItem.vue'
 import DraggableItem from './DraggableItem.vue'
+import GroupItem from './GroupItem.vue'
+
+const defaultSapn = 24
 
 const components: Partial<Record<El, unknown>> = {
     input: NInput,
@@ -61,7 +64,8 @@ const components: Partial<Record<El, unknown>> = {
     switch: NSwitch,
     rate: NRate,
     spread: SpreadItem,
-    drag: DraggableItem
+    drag: DraggableItem,
+    group: GroupItem
 }
 interface Props {
     item: DynamicItem
