@@ -22,53 +22,62 @@ export const formConfig: DynamicItem[] = [
     {
         span: 24,
         el: 'input',
-        label: 'Array Config Input1',
-        prop: 'nested.arrayConfigInput'
+        label: 'nested Input1',
+        path: 'nested.arrayConfigInput',
+        rules: stringRule,
+        generateRules(modelValue) {
+            this.rules = {
+                validator: () => {
+                    return modelValue['arr[0]'] === 'pass'
+                },
+                message: 'Array Config Input 0 is not "pass"'
+            }
+        }
     },
     {
         el: 'input',
-        label: 'Array Config Input 3',
-        prop: 'arr[0]'
+        label: 'Array Config Input 0',
+        path: 'arr[0]'
     },
     {
         el: 'input',
-        label: 'Array Config Input 3',
-        prop: 'arr[1]'
+        label: 'Array Config Input 1',
+        path: 'arr[1]'
     },
     {
         span: 4,
         el: 'switch',
         label: 'switch test',
-        prop: 'switchTest',
+        path: 'switchTest',
         slots: {
             checked: () => h('span', 'checked'),
             unchecked: 'unchecked'
         }
     },
     {
-        span: 4,
+        span: 14,
         el: 'select',
         label: 'select test',
-        prop: 'selectTest',
+        path: 'selectTest',
         props: {
             options
         }
     },
     {
-        span: 4,
+        span: 6,
         el: 'rate',
         label: 'rate test',
-        prop: 'rateTest',
+        path: 'rateTest',
         slots: {
-            default: ({ index }: { index: number }) => {
-                return index + '★'
+            default: () => {
+                return '😄'
             }
         }
     },
     {
         span: 24,
         el: 'drag',
-        prop: 'spreadTest',
+        path: 'spreadTest',
         notForm: true,
         visible: (model: Record<string, any>) => {
             return model.switchTest
@@ -77,50 +86,44 @@ export const formConfig: DynamicItem[] = [
         props: {
             title: 'Outer',
             children: [
-                // {
-                //     el: 'input',
-                //     label: 'Spread Input 1',
-                //     prop: 'input1',
-                //     rules: stringRule
-                // },
+                {
+                    el: 'input',
+                    label: 'Spread Input',
+                    path: 'spreadNested.input',
+                    rules: stringRule
+                },
                 {
                     el: 'switch',
                     label: 'spread switch',
-                    prop: 'spread1',
+                    path: 'spread1'
+                },
+                {
+                    span: 24,
+                    el: 'drag',
+                    path: 'spreadInner',
+                    notForm: true,
                     props: {
-                        // 'onUpdateValue'(value) {
-                        //     console.log('******', value)
-                        // }
-                        value: true
+                        title: 'Inner',
+                        children: [
+                            {
+                                el: 'input',
+                                label: 'Spread Input 1',
+                                path: 'input1',
+                                rules: stringRule
+                            },
+                            {
+                                el: 'switch',
+                                label: 'spread switch',
+                                path: 'spreadSwitch',
+                                props: {
+                                    activeText: 'open',
+                                    inactiveText: 'close',
+                                    inlinePrompt: true
+                                }
+                            }
+                        ]
                     }
                 }
-                // {
-                //     span: 24,
-                //     el: 'drag',
-                //     prop: 'spreadInner',
-                //     notForm: true,
-                //     props: {
-                //         title: 'Inner',
-                //         children: [
-                //             {
-                //                 el: 'input',
-                //                 label: 'Spread Input 1',
-                //                 prop: 'input1',
-                //                 rules: stringRule
-                //             },
-                //             {
-                //                 el: 'switch',
-                //                 label: 'spread switch',
-                //                 prop: 'spreadSwitch',
-                //                 props: {
-                //                     activeText: 'open',
-                //                     inactiveText: 'close',
-                //                     inlinePrompt: true
-                //                 }
-                //             }
-                //         ]
-                //     }
-                // }
             ]
         }
     }

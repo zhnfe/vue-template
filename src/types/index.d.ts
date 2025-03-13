@@ -6,4 +6,7 @@ declare module 'vue-router' {
     }
 }
 
+declare global {
+    type AnyObject = Record<string, any>
+}
 export {}

@@ -1,4 +1,4 @@
-[class^="i-icon"] {
+[class^="i-"] {
     --un-icon: var(--icon, url(/me.png));
     -webkit-mask: var(--un-icon) no-repeat;
     mask: var(--un-icon) no-repeat;
@@ -7,14 +7,20 @@
     background-color: currentColor;
     color: inherit;
     display: inline-block;
-    height: 1em;
     width: 1em;
+    aspect-ratio: 1;
     vertical-align: text-bottom;
     margin-right: 2px;
 }
-.i-icon-right {
+.i-ArrowForwardIosOutlined {
     --un-icon: url(../icons/ArrowForwardIosOutlined.svg);
 }
-.i-icon-tel {
-    -un-icon: url(../icons/ArrowBackIosOutlined.vsg);
+.i-AddCircleOutlined {
+    --un-icon: url(../icons/AddCircleOutlined.svg);
+}
+.i-FileCopyRound {
+    --un-icon: url(../icons/FileCopyRound.svg);
+}
+.i-DeleteRound {
+    --un-icon: url(../icons/DeleteRound.svg);
 }

@@ -3,16 +3,16 @@
         v-if="visible"
     >
         <n-form-item
-            v-if="item.prop && !item.notForm"
-            :style="{gridColumn: `span ${item.span ?? 12}`}"
-            :path="item.prop"
+            v-if="item.path && !item.notForm"
+            :style="{gridColumn: `span ${item.span ?? 24}`}"
+            :path="item.path"
             :label="item.label"
             :rule="item.rules"
         >
             <component
                 :is="components[item.el] ?? item.el"
                 v-bind="item.props"
-                v-model:value="modelValue[item.prop!]"
+                v-model:value="modelValue[item.path!]"
             >
                 <template
                     v-for="slot, key in item.slots"
@@ -30,8 +30,8 @@
             :style="{gridColumn: `span ${item.span ?? 12}`}"
             :is="components[item.el] ?? item.el"
             v-bind="item.props"
-            v-model="modelValue[item.prop!]"
-            :prop="item.prop"
+            v-model="modelValue[item.path!]"
+            :path="item.path"
         >
             <template
                 v-for="slot, key in item.slots"
@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useModelValue } from '@/composables/dynamicForm/useDynamicFormData'
+import { useModelValue } from '@/composables/dynamicForm/useDynamic'
 import type { DynamicItem, El } from '@/types/dynamicForm'
 import { NInput, NCard, NSelect, NSwitch, NRate } from 'naive-ui'
 import { computed, h, watch, type ComputedRef } from 'vue'
@@ -81,11 +81,12 @@ const visible = (() => {
 if (props.item.clearOnHide) {
     watch(() => (visible as ComputedRef<boolean>).value, val => {
         if (!val && props.item.clearOnHide) {
-            modelValue.value[props.item.prop!] = undefined
+            modelValue.value[props.item.path!] = undefined
         }
     })
 }
-
+// 给自定义 rules 传入 modelValue
+props.item.generateRules?.(modelValue.value)
 const getSlotContent = (slot: unknown, value: unknown) => {
     if (typeof slot !== 'function') {
         return h('span', slot ?? '')

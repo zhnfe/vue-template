@@ -8,7 +8,7 @@
     >
         <dynamic-item
             v-for="item in config"
-            :key="item.prop || item.label || item.key"
+            :key="item.path || item.label || item.key"
             :item="item"
         />
         <div v-if="showSaveButton" class="text-right mt-6 col-span-24">
@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { useTemplateRef } from 'vue'
 import DynamicItem from './DynamicItem.vue'
-import { useInjectFormData } from '@/composables/dynamicForm/useDynamicFormData'
+import { useInjectFormData } from '@/composables/dynamicForm/useDynamic'
 import { message } from '@/utils'
 interface Props {
     labelPosition?: 'top' | 'left' | 'right'

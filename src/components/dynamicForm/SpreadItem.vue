@@ -9,7 +9,7 @@
 
         <div class="border border-gray-200 rounded-xl overflow-hidden">
             <div
-                v-for="_item, index in modelValue[prop]"
+                v-for="_item, index in modelValue[path]"
                 :key="index"
                 :name="index"
                 class="not-last:border-b-1 border-gray-200"
@@ -18,11 +18,11 @@
                     class="flex items-center w-full px-3 py-2 bg-gray-50 cursor-pointer select-none"
                     @click="onTitleClick(index)"
                 >
-                    <i class="i-icon-right transition-all" :class="open.includes(index) ? 'rotate-90' : ''"></i>
+                    <i class="i-ArrowForwardIosOutlined transition-all" :class="open.includes(index) ? 'rotate-90' : ''"></i>
                     <div class="text-base">{{ `第${index + 1}项` }}</div>
                     <div class="ml-auto">
                         <n-button :disabled="index === 0" @click.stop="moveUp(index)">上移</n-button>
-                        <n-button :disabled="index === modelValue[prop].length - 1" @click.stop="moveDown(index)">下移</n-button>
+                        <n-button :disabled="index === modelValue[path].length - 1" @click.stop="moveDown(index)">下移</n-button>
                         <n-button @click.stop="copy(index)">复制</n-button>
                         <n-button @click.stop="deleteItem(index)">删除</n-button>
                     </div>
@@ -45,49 +45,48 @@
 <script lang="ts" setup>
 import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'
 import DynamicItem from './DynamicItem.vue'
-import { useModelValue } from '@/composables/dynamicForm/useDynamicFormData'
+import { useModelValue } from '@/composables/dynamicForm/useDynamic'
 import { ref } from 'vue'
 interface Props {
     title: string
-    prop: string
+    path: string
     children: DynamicItemType[]
 }
 const getFormitem = (item: DynamicItemType, index: number) => {
     return {
         ...item,
-        prop: `${props.prop}[${index}].${item.prop}`
+        path: `${props.path}[${index}].${item.path}`
     }
 }
 const open = ref([0])
 const { modelValue } = useModelValue()
 const props = defineProps<Props>()
 const add = () => {
-    if (!Array.isArray(modelValue.value[props.prop])) {
-        modelValue.value[props.prop] = [{}]
-        // activeNames.value = [0]
+    if (!Array.isArray(modelValue.value[props.path])) {
+        modelValue.value[props.path] = [{}]
         return
     }
-    modelValue.value[props.prop].push({})
+    modelValue.value[props.path].push({})
 }
 const deleteItem = (index: number) => {
-    modelValue.value[props.prop].splice(index, 1)
+    modelValue.value[props.path].splice(index, 1)
 }
 
 const moveUp = (index: number) => {
     if (index === 0) return
-    const temp = modelValue.value[props.prop][index]
-    modelValue.value[props.prop][index] = modelValue.value[props.prop][index - 1]
-    modelValue.value[props.prop][index - 1] = temp
+    const temp = modelValue.value[props.path][index]
+    modelValue.value[props.path][index] = modelValue.value[props.path][index - 1]
+    modelValue.value[props.path][index - 1] = temp
 }
 const moveDown = (index: number) => {
-    if (index === modelValue.value[props.prop].length - 1) return
-    const temp = modelValue.value[props.prop][index]
-    modelValue.value[props.prop][index] = modelValue.value[props.prop][index + 1]
-    modelValue.value[props.prop][index + 1] = temp
+    if (index === modelValue.value[props.path].length - 1) return
+    const temp = modelValue.value[props.path][index]
+    modelValue.value[props.path][index] = modelValue.value[props.path][index + 1]
+    modelValue.value[props.path][index + 1] = temp
 }
 
 const copy = (index: number) => {
-    modelValue.value[props.prop].splice(index, 0, { ...modelValue.value[props.prop][index] })
+    modelValue.value[props.path].splice(index, 0, { ...modelValue.value[props.path][index] })
 }
 
 const onTitleClick = (index: number) => {
