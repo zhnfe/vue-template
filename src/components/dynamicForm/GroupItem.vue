@@ -1,9 +1,11 @@
 <template>
-    <dynamic-item
-        v-for="item, index in children"
-        :item="getFormitem(item)"
-        :key="index"
-    />
+    <div>
+        <dynamic-item
+            v-for="item, index in children"
+            :item="getFormitem(item)"
+            :key="index"
+        />
+    </div>
 </template>
 <script lang="ts" setup>
 import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'

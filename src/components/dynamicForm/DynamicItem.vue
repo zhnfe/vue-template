@@ -17,15 +17,12 @@
                     :key="key"
                     #[key]="values"
                 >
-                    <component
-                        :is="getSlotContent(slot, values)"
-                    />
+                    <component :is="getSlotContent(slot, values)" />
                 </template>
             </component>
         </n-form-item>
         <component
             v-else
-            v-model="modelValue[item.path!]"
             v-bind="item.props"
             :style="{gridColumn: `span ${item.span ?? defaultSapn}`}"
             :is="components[item.el] ?? item.el"
@@ -38,9 +35,7 @@
                 :key="key"
                 #[key]="values"
             >
-                <component
-                    :is="getSlotContent(slot, values)"
-                />
+                <component :is="getSlotContent(slot, values)" />
             </template>
         </component>
     </template>
