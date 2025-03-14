@@ -10,6 +10,9 @@ export const generateId = () => {
 
 /** 给一个对象添加一个不可枚举的 _id 属性, 可指定 key */
 export const useInjectId = (obj: AnyObject, key = '_id') => {
+    if (Object.hasOwn(obj, key)) {
+        return obj
+    }
     Object.defineProperty(obj, key, {
         enumerable: false,
         value: generateId()

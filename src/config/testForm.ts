@@ -59,10 +59,10 @@ export const formConfig: DynamicItem[] = [
         label: 'nested Input1',
         path: 'nested.arrayConfigInput',
         rules: stringRule,
-        generateRules(modelValue) {
+        generateRules(model) {
             this.rules = {
                 validator: () => {
-                    return modelValue['arr[0]'] === 'pass'
+                    return model.arr?.[0] === 'pass'
                 },
                 message: 'Array Config Input 0 is not "pass"'
             }
@@ -104,7 +104,7 @@ export const formConfig: DynamicItem[] = [
         path: 'rateTest',
         slots: {
             default: () => {
-                return '😄'
+                return '哈'
             }
         }
     },
@@ -117,6 +117,7 @@ export const formConfig: DynamicItem[] = [
         },
         clearOnHide: true,
         title: 'Human Configuration',
+        initialValue: { spread1: true },
         children: [
             {
                 el: 'input',
@@ -134,6 +135,7 @@ export const formConfig: DynamicItem[] = [
                 path: 'spreadInner',
                 notForm: true,
                 title: 'Test Inner Configuration',
+                initialValue: { input1: '11' },
                 children: [
                     {
                         el: 'input',

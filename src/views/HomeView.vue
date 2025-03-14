@@ -1,5 +1,6 @@
 <template>
     <h1 class="text-center">Home</h1>
+    <!-- <home-menu msg="hello menu" /> -->
     <dynamic-form
         class="mx-auto w-[650px]"
         @submit="onSubmit"
@@ -9,16 +10,23 @@
 <script setup lang="ts">
 import DynamicForm from '@/components/dynamicForm/DynamicForm.vue'
 import { formConfig } from '@/config/testForm'
-import { useDynamicFormData, useSetModel } from '@/composables/dynamicForm'
-const formData = useDynamicFormData({
-    model: { switchTest: true },
+import { useDynamicFormData } from '@/composables/dynamicForm'
+// import HomeMenu from '@/components/HomeMenu'
+
+const { model } = useDynamicFormData({
+    model: {
+        switchTest: false,
+        arr: [
+            'pass'
+        ]
+    },
     config: formConfig
 })
 
-// window.model = formData.model
+// window.model = model
 setTimeout(() => {
-    useSetModel(formData.model, {})
-}, 2000)
+    model.switchTest = true
+}, 1500)
 
 const onSubmit = (data: AnyObject) => {
     console.log(JSON.stringify(data, null, 2))

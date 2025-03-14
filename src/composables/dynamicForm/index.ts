@@ -5,7 +5,14 @@ import { useInjectId } from '@/utils'
 
 export const dynamicFormIdKey = '_formId'
 
-const useInjectArrayItemId = (obj: AnyObject) => {
+/** 递归为数组中的每个元素添加 _formId,
+ *  如果需要给 model 添加数组对象, 则调用此方法
+ * @example
+ * ```js
+ *   model.arrayItems = useInjectArrayItemId([...])
+ * ```
+*/
+export const useInjectArrayItemId = <T>(obj: T) => {
     if (obj === null || typeof obj !== 'object') {
         return obj
     }
@@ -27,22 +34,34 @@ const useInjectArrayItemId = (obj: AnyObject) => {
     }
     return obj
 }
-export const useDynamicFormData = ({ model, config }: DynamicFormData): DynamicFormData => {
+
+/**
+ * 使用动态表单数据的自定义 Hook。
+ * @param param 动态表单数据对象，包含 `model` 和 `config` 属性。
+ * @returns 返回动态表单数据对象，包含 `model`、`config` 和 `updateModel` 方法。
+ */
+export const useDynamicFormData = <T extends AnyObject>({ model, config }: DynamicFormData<T>) => {
     const formData = reactive({
         model: useInjectArrayItemId(model),
         config
-    })
-    provide('formData', formData)
-    return formData
+    }) as DynamicFormData<T>
+
+    const dynamicData = {
+        ...formData,
+        updateModel(data: T) {
+            Object.assign(formData.model, useInjectArrayItemId(data))
+        }
+    }
+    provide('dynamicData', dynamicData)
+    return dynamicData
 }
 
-export const useInjectFormData = () => {
-    return inject<DynamicFormData>('formData')!
+/** 获取 model 和 config */
+export const useInjectFormData = <T extends AnyObject>() => {
+    return inject<ReturnType<typeof useDynamicFormData<T>>>('dynamicData')!
 }
 
-export const useSetModel = (model: DynamicFormData['model'], data: AnyObject) => {
-    Object.assign(model, useInjectArrayItemId(data))
-}
+/** 返回 model 的代理, 用于 v-model */
 export const useModelValue = () => {
     const { model } = useInjectFormData()
     const modelValue = computed({

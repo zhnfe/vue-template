@@ -1,7 +1,11 @@
 <template>
     <div class="font-mono">
         <h1 class="text-center text-5xl mt-[40vh]"><pre>404 Not Found</pre></h1>
-        <p class="text-center mt-6 text-2xl">Will go to the home page in {{ count }} seconds</p>
+        <p class="flex justify-center items-end mt-4 text-2xl">
+            <span>Will go to the home page in</span>
+            <pre class="text-3xl"> {{ count }} </pre>
+            <span>seconds</span>
+        </p>
     </div>
 </template>
 <script lang="ts" setup>

@@ -6,7 +6,7 @@
         handle=".mover"
         ghost-class="bg-gray-100"
         chosen-class="bg-gray-100"
-        drag-class="bg-gray-200!"
+        drag-class="bg-gray-100!"
     >
         <template #header>
             <div class="text-base flex items-center mb-3">
@@ -57,6 +57,7 @@ import { cloneDeep } from 'es-toolkit'
 interface Props {
     title: string
     path: string
+    initialValue?: AnyObject
     children: DynamicItemType[]
 }
 const dragBorderClass = 'border border-dashed border-gray-300'
@@ -74,7 +75,7 @@ const getFormitem = (item: DynamicItemType, index: number) => {
 const { modelValue } = useModelValue()
 const props = defineProps<Props>()
 const add = () => {
-    const newItem = useInjectId({}, dynamicFormIdKey)
+    const newItem = useInjectId(cloneDeep(props.initialValue ?? {}), dynamicFormIdKey)
     if (!Array.isArray(modelValue.value[props.path])) {
         modelValue.value[props.path] = [newItem]
         return

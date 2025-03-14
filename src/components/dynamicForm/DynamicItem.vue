@@ -29,6 +29,7 @@
             :path="item.path"
             :children="item.children"
             :title="item.title"
+            :initial-value="item.initialValue"
         >
             <template
                 v-for="slot, key in item.slots"
@@ -85,7 +86,7 @@ if (props.item.clearOnHide) {
     })
 }
 // 给自定义 rules 传入 modelValue
-props.item.generateRules?.(modelValue.value)
+props.item.generateRules?.(model)
 const getSlotContent = (slot: unknown, value: unknown) => {
     if (typeof slot !== 'function') {
         return h('span', slot ?? '')
