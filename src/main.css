@@ -1,8 +1,32 @@
 @import "tailwindcss";
-@import "./assets/styles/icon.css";
+@import "./assets/styles/icons.css";
+
+i[class^="i-"] {
+    --un-icon: var(--icon, url(/me.png));
+    -webkit-mask: var(--un-icon) no-repeat;
+    mask: var(--un-icon) no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    background-color: currentColor;
+    color: inherit;
+    display: inline-block;
+    width: 1.2em;
+    aspect-ratio: 1;
+    vertical-align: text-bottom;
+    margin-right: 2px;
+}
 .n-card {
     width: auto;
 }
 .n-button + .n-button {
     @apply ml-2;
+}
+.n-submenu {
+    user-select: none;
+}
+
+@property --home-header-height {
+    syntax: "<length>";
+    initial-value: 55px;
+    inherits: false;
 }

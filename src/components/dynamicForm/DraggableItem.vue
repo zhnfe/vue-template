@@ -16,7 +16,7 @@
                     class="i-AddCircleOutlined ml-5 cursor-pointer"
                     style="width: 1.5em"
                     @click="add"
-                ></i>
+                />
             </div>
         </template>
         <template #item="{ index }">
@@ -32,9 +32,9 @@
                         v-if="index === modelValue[path].length - 1"
                         class="i-AddCircleOutlined cursor-pointer"
                         @click="add"
-                    ></i>
-                    <i class="i-DeleteRound cursor-pointer" @click.stop="deleteItem(index)"></i>
-                    <i class="i-FileCopyRound cursor-pointer" @click.stop="copy(index)"></i>
+                    />
+                    <i class="i-DeleteRound cursor-pointer" @click.stop="deleteItem(index)" />
+                    <i class="i-FileCopyRound cursor-pointer" @click.stop="copy(index)" />
                 </div>
                 <div class="grid grid-cols-24 gap-x-6 px-3 my-3">
                     <dynamic-item

@@ -1,0 +1,20 @@
+[
+    {
+        "pid": 1,
+        "url": "homeDefault",
+        "title": "首页",
+        "icon": "home"
+    },
+    {
+        "pid": 1,
+        "url": "dynamicForm",
+        "title": "动态表单示例",
+        "icon": "cube-transparent"
+    },
+    {
+        "pid": 1,
+        "title": "Demo",
+        "icon": "command-line",
+        "url": "demo"
+    }
+]

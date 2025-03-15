@@ -13,7 +13,7 @@ export default [
 
     {
         name: 'app/files-to-ignore',
-        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.nuxt/**']
+        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.nuxt/**', 'src/components/icons/**']
     },
     ...vueConfig,
     ...pluginVue.configs['flat/strongly-recommended'],
@@ -39,6 +39,13 @@ export default [
     {
         name: 'for vue file',
         files: ['**/*.vue'],
+        languageOptions: {
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true
+                }
+            }
+        },
         rules: {
             'vue/max-attributes-per-line': ['error', {
                 singleline: {
@@ -58,14 +65,17 @@ export default [
             'vue/singleline-html-element-content-newline': 'off',
             'vue/html-self-closing': ['error', {
                 html: {
-                    void: 'never',
-                    normal: 'never',
+                    void: 'always',
+                    normal: 'always',
                     component: 'always'
                 },
                 svg: 'always',
                 math: 'always'
             }],
-            'vue/multi-word-component-names': 'off'
+            'vue/multi-word-component-names': 'off',
+            'vue/block-lang': ['error', {
+                script: { lang: ['ts', 'tsx'] }
+            }]
         }
     }
 ]

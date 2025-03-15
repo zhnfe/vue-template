@@ -1,34 +1,17 @@
 <template>
-    <h1 class="text-center">Home</h1>
-    <!-- <home-menu msg="hello menu" /> -->
-    <dynamic-form
-        class="mx-auto w-[650px]"
-        @submit="onSubmit"
+    <header
+        style="height: var(--home-header-height);"
+        class="border-b-1 border-blue-50 bg-white fixed w-full top-0 z-20"
     />
+    <main class="fixed top-[var(--home-header-height)] bottom-0 w-full flex">
+        <home-menu />
+        <div class="flex-auto overflow-auto p-4 pl-6">
+            <router-view />
+        </div>
+    </main>
 </template>
 
 <script setup lang="ts">
-import DynamicForm from '@/components/dynamicForm/DynamicForm.vue'
-import { formConfig } from '@/config/testForm'
-import { useDynamicFormData } from '@/composables/dynamicForm'
-// import HomeMenu from '@/components/HomeMenu'
+import HomeMenu from '@/components/HomeMenu.vue'
 
-const { model } = useDynamicFormData({
-    model: {
-        switchTest: false,
-        arr: [
-            'pass'
-        ]
-    },
-    config: formConfig
-})
-
-// window.model = model
-setTimeout(() => {
-    model.switchTest = true
-}, 1500)
-
-const onSubmit = (data: AnyObject) => {
-    console.log(JSON.stringify(data, null, 2))
-}
 </script>

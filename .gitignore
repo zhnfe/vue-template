@@ -15,6 +15,12 @@ coverage
 *.local
 .local
 
+# icons
+src/components/icons/
+src/assets/styles/icons.css
+# auto component types
+src/types/components.d.ts
+
 /cypress/videos/
 /cypress/screenshots/
 

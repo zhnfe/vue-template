@@ -26,7 +26,6 @@ export const formConfig: DynamicItem[] = [
                 rules: stringRule
             },
             {
-                span: 24,
                 el: 'drag',
                 path: 'spread',
                 notForm: true,
@@ -54,7 +53,6 @@ export const formConfig: DynamicItem[] = [
         clearOnHide: true
     },
     {
-        span: 24,
         el: 'input',
         label: 'nested Input1',
         path: 'nested.arrayConfigInput',
@@ -69,17 +67,19 @@ export const formConfig: DynamicItem[] = [
         }
     },
     {
+        span: 12,
         el: 'input',
         label: 'Array Config Input 0',
         path: 'arr[0]'
     },
     {
+        span: 12,
         el: 'input',
         label: 'Array Config Input 1',
         path: 'arr[1]'
     },
     {
-        span: 4,
+        span: 12,
         el: 'switch',
         label: 'switch test',
         path: 'switchTest',
@@ -89,16 +89,7 @@ export const formConfig: DynamicItem[] = [
         }
     },
     {
-        span: 14,
-        el: 'select',
-        label: 'select test',
-        path: 'selectTest',
-        props: {
-            options
-        }
-    },
-    {
-        span: 6,
+        span: 12,
         el: 'rate',
         label: 'rate test',
         path: 'rateTest',
@@ -106,6 +97,14 @@ export const formConfig: DynamicItem[] = [
             default: () => {
                 return '哈'
             }
+        }
+    },
+    {
+        el: 'select',
+        label: 'select test',
+        path: 'selectTest',
+        props: {
+            options
         }
     },
     {

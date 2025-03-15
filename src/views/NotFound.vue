@@ -3,7 +3,7 @@
         <h1 class="text-center text-5xl mt-[40vh]"><pre>404 Not Found</pre></h1>
         <p class="flex justify-center items-end mt-4 text-2xl">
             <span>Will go to the home page in</span>
-            <pre class="text-3xl"> {{ count }} </pre>
+            <span class="text-3xl">&nbsp;{{ count }}&nbsp;</span>
             <span>seconds</span>
         </p>
     </div>

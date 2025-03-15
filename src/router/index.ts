@@ -1,10 +1,11 @@
+import NotFound from '@/views/NotFound.vue'
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
     {
         path: '/:pathMatch(.*)*',
         name: 'notFound',
-        component: () => import('@/views/NotFound.vue')
+        component: NotFound
     },
     {
         path: '/',
@@ -12,15 +13,30 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/HomeView.vue'),
         meta: {
             documentTitle: 'Home'
-        }
-    },
-    {
-        path: '/demo',
-        name: 'demo',
-        component: () => import('@/views/DemoView.vue'),
-        meta: {
-            documentTitle: 'Demo'
-        }
+        },
+        children: [
+            {
+                path: '',
+                name: 'homeDefault',
+                component: () => import('@/views/HomeDefault.vue')
+            },
+            {
+                path: '/dynamic-form',
+                name: 'dynamicForm',
+                component: () => import('@/views/DynamicForm.vue'),
+                meta: {
+                    documentTitle: 'Dynamic Form'
+                }
+            },
+            {
+                path: '/demo',
+                name: 'demo',
+                component: () => import('@/views/DemoView.vue'),
+                meta: {
+                    documentTitle: 'Demo'
+                }
+            }
+        ]
     }
 ]
 

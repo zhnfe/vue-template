@@ -5,8 +5,11 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import tailwindcss from '@tailwindcss/vite'
+import generateIconClassPlugin from './plugins/generateIconClassPlugin'
 export default defineConfig({
     plugins: [
+        generateIconClassPlugin(),
+        // iconComponentsPlugin(),
         vue(),
         vueJsx(),
         tailwindcss(),
@@ -14,7 +17,7 @@ export default defineConfig({
             resolvers: [
                 NaiveUiResolver()
             ],
-            dts: false
+            dts: 'src/types/components.d.ts'
         })
     ],
     resolve: {
@@ -23,7 +26,15 @@ export default defineConfig({
         }
     },
     build: {
-        target: 'esnext'
+        target: 'esnext',
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vue: ['vue', 'vue-router', 'pinia'],
+                    naive: ['naive-ui']
+                }
+            }
+        }
     },
     base: process.env.NODE_ENV === 'development' ? '/' : '/vue-template'
 })
