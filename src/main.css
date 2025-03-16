@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "./assets/styles/icons.css";
 
 i[class^="i-"] {
     --un-icon: var(--icon, url(/me.png));

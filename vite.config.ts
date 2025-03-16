@@ -5,11 +5,11 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import tailwindcss from '@tailwindcss/vite'
-import generateIconClassPlugin from './plugins/generateIconClassPlugin'
+import { iconComponentsPlugin } from './plugins/generateIconClassPlugin'
 export default defineConfig({
     plugins: [
-        generateIconClassPlugin(),
-        // iconComponentsPlugin(),
+        // generateIconClassPlugin(),
+        iconComponentsPlugin(),
         vue(),
         vueJsx(),
         tailwindcss(),
