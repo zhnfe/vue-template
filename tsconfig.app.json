@@ -1,8 +1,5 @@
 {
     "extends": "@vue/tsconfig/tsconfig.dom.json",
-    "lib": [
-        "ESNext"
-    ],
     "include": [
         "src/**/*",
         "src/**/*.vue",
@@ -13,11 +10,12 @@
     ],
     "compilerOptions": {
         "target": "ESNext",
+        "lib": [
+            "ESNext"
+        ],
         "composite": true,
         "jsx": "preserve",
         "jsxImportSource": "vue",
-        "jsxFactory": "h",
-        "jsxFragmentFactory": "Fragment",
         "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
         "paths": {
             "@/*": [

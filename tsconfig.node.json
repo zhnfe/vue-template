@@ -2,7 +2,8 @@
     "extends": "@tsconfig/node22/tsconfig.json",
     "include": [
         "vite.config.*",
-        "eslint.config.*"
+        "eslint.config.*",
+        "plugins/*"
     ],
     "compilerOptions": {
         "composite": true,

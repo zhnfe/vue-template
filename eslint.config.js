@@ -1,9 +1,9 @@
 import pluginVue from 'eslint-plugin-vue'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import stylistic from '@stylistic/eslint-plugin'
 
 const vueConfig = defineConfigWithVueTs(
-    pluginVue.configs['flat/recommended'],
-    vueTsConfigs.recommended
+    vueTsConfigs.strict
 )
 export default [
     {
@@ -13,23 +13,39 @@ export default [
 
     {
         name: 'app/files-to-ignore',
-        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**']
+        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.nuxt/**', 'src/components/icons/**']
     },
     ...vueConfig,
-
+    ...pluginVue.configs['flat/strongly-recommended'],
     {
         rules: {
-            semi: ['error', 'never', { beforeStatementContinuationChars: 'always' }],
-            'object-curly-spacing': ['error', 'always'],
-            indent: ['error', 4],
-            quotes: ['error', 'single'],
-            'comma-dangle': ['error', 'never'],
-            'quote-props': ['error', 'as-needed']
+            '@typescript-eslint/no-non-null-assertion': 'off',
+            '@typescript-eslint/no-explicit-any': 'off'
+        }
+    },
+    {
+        plugins: {
+            '@stylistic': stylistic
+        },
+        rules: {
+            ...stylistic.configs['recommended'].rules,
+            '@stylistic/indent': ['error', 4],
+            '@stylistic/comma-dangle': ['error', 'never'],
+            '@stylistic/quote-props': ['error', 'as-needed'],
+            '@stylistic/function-call-spacing': ['error', 'never'],
+            '@stylistic/arrow-parens': ['error', 'as-needed']
         }
     },
     {
         name: 'for vue file',
         files: ['**/*.vue'],
+        languageOptions: {
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true
+                }
+            }
+        },
         rules: {
             'vue/max-attributes-per-line': ['error', {
                 singleline: {
@@ -49,12 +65,16 @@ export default [
             'vue/singleline-html-element-content-newline': 'off',
             'vue/html-self-closing': ['error', {
                 html: {
-                    void: 'never',
-                    normal: 'never',
+                    void: 'always',
+                    normal: 'always',
                     component: 'always'
                 },
                 svg: 'always',
                 math: 'always'
+            }],
+            'vue/multi-word-component-names': 'off',
+            'vue/block-lang': ['error', {
+                script: { lang: ['ts', 'tsx'] }
             }]
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <h1 class="text-center">demo</h1>
+    <h1>demo view</h1>
 </template>
 
 <script setup lang="ts">
