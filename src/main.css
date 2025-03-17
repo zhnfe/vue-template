@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-i[class^="i-"] {
+i.i-icon{
     --un-icon: var(--icon, url(/me.png));
     -webkit-mask: var(--un-icon) no-repeat;
     mask: var(--un-icon) no-repeat;

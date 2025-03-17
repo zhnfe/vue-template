@@ -37,15 +37,12 @@ withDefaults(defineProps<Props>(), {
     showSaveButton: true
 })
 
-const { model, config } = useInjectFormData()
+const { model, config, onSubmit } = useInjectFormData()
 const formRef = useTemplateRef('form')
-const emits = defineEmits<{
-    submit: [data: AnyObject]
-}>()
 const submit = async () => {
     try {
         await formRef.value?.validate()
-        emits('submit', model)
+        onSubmit(model)
     }
     catch (e: unknown) {
         if (e instanceof Error) {

@@ -1,8 +1,6 @@
 <template>
     <h1 class="text-center text-2xl mb-2">Dynamic Form</h1>
-    <dynamic-form
-        @submit="onSubmit"
-    />
+    <dynamic-form />
 </template>
 
 <script lang="ts" setup>
@@ -17,15 +15,14 @@ const { model } = useDynamicFormData({
             'pass'
         ]
     },
-    config: formConfig
+    config: formConfig,
+    onSubmit: async data => {
+        console.log(JSON.stringify(data, null, 2))
+    }
 })
-
 // window.model = model
 setTimeout(() => {
     model.switchTest = true
 }, 1500)
 
-const onSubmit = (data: AnyObject) => {
-    console.log(JSON.stringify(data, null, 2))
-}
 </script>

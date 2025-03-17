@@ -1,4 +1,6 @@
 <template>
-    <h1>Home Default</h1>
-    <i-cube />
+    <h1>
+        Home Default
+        <i-github />
+    </h1>
 </template>

@@ -33,9 +33,9 @@ import { ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import menus from '@/config/menu.json'
 import type { MenuMixedOption } from 'naive-ui/es/menu/src/interface'
-import IHome from './icons/IHome.vue'
-import ICubeTransparent from './icons/ICubeTransparent.vue'
-import ICommandLine from './icons/ICommandLine.vue'
+import IHome from 'virtual:icon-components/IHome.vue'
+import ICubeTransparent from 'virtual:icon-components/ICubeTransparent.vue'
+import ICommandLine from 'virtual:icon-components/ICommandLine.vue'
 
 interface MenuItem {
     pid: number
@@ -50,7 +50,7 @@ const route = useRoute()
 const activeKey = ref(route.name as string)
 const expandedKeys = ref<string[]>([menus[0].pid + menus[0].title])
 const collapsed = ref(window.innerWidth <= 950)
-const iconMap: AnyObject = {
+const iconMap: Record<string, VueComponent> = {
     home: IHome,
     'cube-transparent': ICubeTransparent,
     'command-line': ICommandLine
@@ -58,12 +58,12 @@ const iconMap: AnyObject = {
 
 const dealMenu = (menus: MenuItem[]): MenuMixedOption[] => {
     return menus.map(item => {
-        const Icon = item.icon ? iconMap[item.icon] : void 0
+        // const Icon = item.icon ? iconMap[item.icon] : void 0
         return {
             label: item.url && !item.children
                 ? () => <RouterLink to={{ name: item.url }}>{item.title}</RouterLink>
                 : item.title,
-            icon: item.icon ? () => <Icon /> : void 0,
+            icon: item.icon ? (Icon => () => <Icon />)(iconMap[item.icon]) : void 0,
             key: item.url || item.pid + item.title,
             children: item.children ? dealMenu(item.children) : void 0
         }
