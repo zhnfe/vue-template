@@ -35,7 +35,6 @@ export function generateIconComponents(): Plugin {
         },
         load(id) {
             if (id.startsWith(iconComponentsDir)) {
-                console.log('loadId: ', id)
                 // key: 'virtual:icon-components/IDeleteRound.vue'
                 return iconComponents[id]
             }
@@ -43,9 +42,8 @@ export function generateIconComponents(): Plugin {
         },
         hotUpdate(options) {
             if (options.file.includes(iconFileDir)) {
-                console.log('****modules:', options.modules)
                 generateComponents()
-                // options.server.
+                options.server.moduleGraph.invalidateAll()
             }
         },
         buildStart() {
