@@ -9,8 +9,7 @@ const iconFileDir = 'src/assets/icons/'
 const toPascalCase = (filename: string) => {
     return filename.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
 }
-
-export function generateIconComponents(): Plugin {
+export function generateIconComponents(): Plugin[] {
     const iconsDir = path.join(process.cwd(), 'src/assets/icons')
     let iconComponents: Record<string, string> = {}
     const generateComponents = () => {
@@ -24,21 +23,39 @@ export function generateIconComponents(): Plugin {
         })
     }
 
-    return {
-        name: 'vite-generate-icon-components',
+    let hasResolved = false
+    return [{
+        name: 'vite-ignore-icon-components-at-first',
         enforce: 'pre',
+        resolveId(id) {
+            if (hasResolved) {
+                return
+            }
+
+            if (fs.existsSync('node_modules/.vite/deps')) {
+                hasResolved = true
+                return
+            }
+
+            if (id.startsWith(iconComponentsDir)) {
+                return 'src/App.vue'
+            }
+        }
+    }, {
+        name: 'vite-generate-icon-components',
+        enforce: 'post',
         resolveId(id) {
             if (id.startsWith(iconComponentsDir)) {
                 return id
             }
-            return null
+            return
         },
         load(id) {
             if (id.startsWith(iconComponentsDir)) {
                 // key: 'virtual:icon-components/IDeleteRound.vue'
                 return iconComponents[id]
             }
-            return null
+            return
         },
         hotUpdate(options) {
             if (options.file.includes(iconFileDir)) {
@@ -49,7 +66,7 @@ export function generateIconComponents(): Plugin {
         buildStart() {
             generateComponents()
         }
-    }
+    }]
 }
 export function IconResolver(): ComponentResolverObject {
     return {
