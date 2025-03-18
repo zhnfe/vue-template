@@ -27,6 +27,7 @@ export function generateIconComponents(): Plugin[] {
     return [{
         name: 'vite-ignore-icon-components-at-first',
         enforce: 'pre',
+        apply: 'serve',
         resolveId(id) {
             if (hasResolved) {
                 return

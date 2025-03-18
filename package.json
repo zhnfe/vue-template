@@ -5,12 +5,12 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "serve": "vite --host",
-        "build": "run-p type-check \"build-only {@}\" --",
         "preview": "vite preview",
+        "build": "run-p lint-only type-check build-only",
         "build-only": "vite build",
         "type-check": "vue-tsc --build --force",
         "lint": "eslint . --fix",
+        "lint-only": "eslint . --quiet",
         "postinstall": "simple-git-hooks"
     },
     "engines": {
@@ -49,7 +49,7 @@
         "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "eslint --fix"
     },
     "simple-git-hooks": {
-        "pre-commit": "pnpm lint-staged && pnpm type-check"
+        "pre-commit": "run-p lint type-check"
     },
     "pnpm": {
         "onlyBuiltDependencies": [
