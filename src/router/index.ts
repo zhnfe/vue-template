@@ -11,9 +11,7 @@ const routes: RouteRecordRaw[] = [
         path: '/',
         name: 'home',
         component: () => import('@/views/HomeView.vue'),
-        meta: {
-            documentTitle: 'Home'
-        },
+        meta: { documentTitle: 'Home' },
         children: [
             {
                 path: '',
@@ -21,20 +19,17 @@ const routes: RouteRecordRaw[] = [
                 component: () => import('@/views/HomeDefault.vue')
             },
             {
-                path: '/dynamic-form',
-                name: 'dynamicForm',
-                component: () => import('@/views/DynamicForm.vue'),
-                meta: {
-                    documentTitle: 'Dynamic Form'
-                }
-            },
-            {
-                path: '/demo',
+                path: 'demo',
                 name: 'demo',
                 component: () => import('@/views/DemoView.vue'),
-                meta: {
-                    documentTitle: 'Demo'
-                }
+                meta: { documentTitle: 'Demo' },
+                children: [
+                    {
+                        path: 'dynamic-form',
+                        name: 'dynamicFormDemo',
+                        component: () => import('@/views/demo/DynamicDemo.vue')
+                    }
+                ]
             }
         ]
     }

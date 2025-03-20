@@ -1,3 +1,11 @@
+<template>
+    <h1 class="text-center text-2xl mb-2">Dynamic Form</h1>
+    <dynamic-form />
+</template>
+
+<script lang="ts" setup>
+import DynamicForm from '@/components/dynamicForm/DynamicForm.vue'
+import { useDynamicFormData } from '@/composables/dynamicForm'
 import type { DynamicItem } from '@/types/dynamicForm'
 import { h, reactive } from 'vue'
 
@@ -8,7 +16,7 @@ const options = reactive([
     { label: 'Option 3', value: 3 }
 ])
 
-export const formConfig: DynamicItem[] = [
+const formConfig: DynamicItem[] = [
     {
         el: 'switch',
         label: 'Show Group',
@@ -158,3 +166,22 @@ export const formConfig: DynamicItem[] = [
     }
 
 ]
+
+const { model } = useDynamicFormData({
+    model: {
+        switchTest: false,
+        arr: [
+            'pass'
+        ]
+    },
+    config: formConfig,
+    onSubmit: async data => {
+        console.log(JSON.stringify(data, null, 2))
+    }
+})
+setTimeout(() => {
+    model.switchTest = true
+    options[0].label = 'Option 1 changed'
+}, 1500)
+
+</script>

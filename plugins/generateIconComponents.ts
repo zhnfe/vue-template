@@ -9,6 +9,17 @@ const iconFileDir = 'src/assets/icons/'
 const toPascalCase = (filename: string) => {
     return filename.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
 }
+
+const generateIcon = (file: string) => {
+    return `<template><i class="i-icon" :style="style" /></template>
+<script setup>
+import icon from '@/assets/icons/${file}'
+const style = {
+    '--icon': 'url("' + icon + '")'
+}
+</script>
+`
+}
 export function generateIconComponents(): Plugin[] {
     const iconsDir = path.join(process.cwd(), 'src/assets/icons')
     let iconComponents: Record<string, string> = {}
@@ -17,14 +28,14 @@ export function generateIconComponents(): Plugin[] {
         iconComponents = {}
         files.forEach(file => {
             const componentName = 'I' + path.basename(toPascalCase(file), '.svg')
-            const content = encodeURIComponent(fs.readFileSync(path.join(iconsDir, file), 'utf-8'))
-            const fileContent = `<template><i class="i-icon" style="--icon: url('data:image/svg+xml,${content}')" /></template>`
+            const fileContent = generateIcon(file)
             iconComponents[iconComponentsDir + componentName + '.vue'] = fileContent
         })
     }
 
     let hasResolved = false
     return [{
+        // 这个插件用于解决 vite 首次引入启动时虚拟依赖报错问题
         name: 'vite-ignore-icon-components-at-first',
         enforce: 'pre',
         apply: 'serve',
@@ -53,7 +64,7 @@ export function generateIconComponents(): Plugin[] {
         },
         load(id) {
             if (id.startsWith(iconComponentsDir)) {
-                // key: 'virtual:icon-components/IDeleteRound.vue'
+                // id: 'virtual:icon-components/IDeleteRound.vue'
                 return iconComponents[id]
             }
             return

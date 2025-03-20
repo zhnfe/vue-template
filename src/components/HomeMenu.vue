@@ -3,7 +3,7 @@
         class="border-r-1 shrink-0 border-gray-200 relative transition-all duration-300"
         :class="{
             'w-12': collapsed,
-            'w-75': !collapsed
+            'w-65': !collapsed
         }"
     >
         <div
@@ -31,7 +31,7 @@
 <script lang="tsx" setup>
 import { ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
-import menus from '@/config/menu.json'
+import { getMenuPath, menus } from '@/config/menu'
 import type { MenuMixedOption } from 'naive-ui/es/menu/src/interface'
 import IHome from 'virtual:icon-components/IHome.vue'
 import ICubeTransparent from 'virtual:icon-components/ICubeTransparent.vue'
@@ -45,11 +45,19 @@ interface MenuItem {
     children?: MenuItem[]
     sort?: number
 }
-const route = useRoute()
+// 获取菜单项的唯一 key, 抽离出来方便复用
+const getMenuItemKey = (item: MenuItem) => item.url ?? (item.pid + item.title)
 
-const activeKey = ref(route.name as string)
-const expandedKeys = ref<string[]>([menus[0].pid + menus[0].title])
+const route = useRoute()
+const routeName = (route.name || '') as string
+
+// 计算出当前菜单路径, 生成默认展开的菜单项
+const currentPath = getMenuPath(menus, routeName)
+const expandedKeys = ref(currentPath.map(getMenuItemKey))
+const activeKey = ref(routeName)
+
 const collapsed = ref(window.innerWidth <= 950)
+
 const iconMap: Record<string, VueComponent> = {
     home: IHome,
     'cube-transparent': ICubeTransparent,
@@ -58,13 +66,12 @@ const iconMap: Record<string, VueComponent> = {
 
 const dealMenu = (menus: MenuItem[]): MenuMixedOption[] => {
     return menus.map(item => {
-        // const Icon = item.icon ? iconMap[item.icon] : void 0
         return {
             label: item.url && !item.children
                 ? () => <RouterLink to={{ name: item.url }}>{item.title}</RouterLink>
                 : item.title,
             icon: item.icon ? (Icon => () => <Icon />)(iconMap[item.icon]) : void 0,
-            key: item.url || item.pid + item.title,
+            key: getMenuItemKey(item),
             children: item.children ? dealMenu(item.children) : void 0
         }
     })

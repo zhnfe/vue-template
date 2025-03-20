@@ -9,8 +9,8 @@
         "build": "run-p lint-only type-check build-only",
         "build-only": "vite build",
         "type-check": "vue-tsc --build --force",
-        "lint": "eslint . --fix",
-        "lint-only": "eslint . --quiet",
+        "lint": "eslint --fix",
+        "lint-only": "eslint --quiet",
         "postinstall": "simple-git-hooks"
     },
     "engines": {
@@ -18,17 +18,17 @@
         "pnpm": ">=9.0.0"
     },
     "dependencies": {
-        "@tailwindcss/vite": "^4.0.9",
         "es-toolkit": "^1.32.0",
         "naive-ui": "^2.41.0",
         "pinia": "^2.3.0",
-        "tailwindcss": "^4.0.12",
+        "tailwindcss": "^4.0.13",
         "vue": "latest",
         "vue-router": "latest",
         "vuedraggable": "^4.1.0"
     },
     "devDependencies": {
         "@stylistic/eslint-plugin": "^4.2.0",
+        "@tailwindcss/vite": "^4.0.13",
         "@tsconfig/node22": "^22.0.0",
         "@types/node": "^22.10.6",
         "@vitejs/plugin-vue": "^5.2.1",
@@ -49,7 +49,7 @@
         "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "eslint --fix"
     },
     "simple-git-hooks": {
-        "pre-commit": "run-p lint type-check"
+        "pre-commit": "npx run-p lint type-check"
     },
     "pnpm": {
         "onlyBuiltDependencies": [
