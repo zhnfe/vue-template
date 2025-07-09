@@ -25,9 +25,20 @@ const routes: RouteRecordRaw[] = [
                 meta: { documentTitle: 'Demo' },
                 children: [
                     {
+                        path: '',
+                        name: 'demoHome',
+                        component: () => import('@/views/demo/Index.vue')
+                    },
+                    {
                         path: 'dynamic-form',
                         name: 'dynamicFormDemo',
                         component: () => import('@/views/demo/DynamicDemo.vue')
+                    },
+                    {
+                        path: 'scroll-comment',
+                        name: 'scrollComment',
+                        component: () => import('@/views/demo/ScrollComment.vue'),
+                        meta: { documentTitle: '不定高固定条数滚动' }
                     }
                 ]
             }

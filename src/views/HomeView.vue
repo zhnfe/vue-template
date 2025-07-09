@@ -5,7 +5,7 @@
     />
     <main class="fixed top-[var(--home-header-height)] bottom-0 w-full flex">
         <home-menu />
-        <div class="flex-auto overflow-auto p-4 pl-6">
+        <div class="flex-auto overflow-auto p-4 pl-6 router-view">
             <router-view />
         </div>
     </main>

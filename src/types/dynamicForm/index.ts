@@ -1,17 +1,17 @@
 import type { FormItemRule } from 'naive-ui'
-import type { VNodeChild } from 'vue'
-type NaiveEl = 'input' | 'card' | 'switch' | 'rate'
+import type { VNode, VNodeChild } from 'vue'
+type NaiveEl = 'input' | 'card' | 'switch' | 'rate' | 'number' | 'date'
 type CustomEl = 'spread' | 'drag' | 'group'
 export type El = NaiveEl | CustomEl | keyof HTMLElementTagNameMap
 
 export interface DynamicItem<T extends AnyObject = AnyObject> {
     span?: number
-    el: El
+    el: El | VNode
     /** 没有 path 和 label 时, 需要提供一个 v-for 使用的标识 */
     key?: string
     /** 给组件的 props, 通过 v-bind 全部传递 */
     props?: Record<string, unknown>
-    visible?(model: T): boolean
+    visible?<U extends AnyObject = AnyObject>(model: T, currentModel: U): boolean
     slots?: Record<string, VNodeChild | (<T extends never>(scoped: T) => VNodeChild)>
     clearOnHide?: boolean
     children?: DynamicItem<T>[]
@@ -19,15 +19,19 @@ export interface DynamicItem<T extends AnyObject = AnyObject> {
     // 表单项
     label?: string
     path?: string
-    rules?: FormItemRule | FormItemRule[]
-    generateRules?(model: T): void
+    // 当前表单项父级路径
+    parrentPath?: string
+    rules?: FormItemRule | FormItemRule[] | (<U extends AnyObject = AnyObject>(model: T, parentModel: U) => FormItemRule | FormItemRule[])
 
     // 非表单项组件
-    notForm?: boolean
     title?: string
 
     /** 数组项初始值 */
     initialValue?: AnyObject
+
+    options?: Array<{ label: string, value: any }> | ((<U extends AnyObject = AnyObject>(model: T, parentModel: U) => Array<{ label: string, value: any }>))
+    // props
+    [key: string]: unknown
 }
 
 export interface DynamicFormData<T extends AnyObject> {

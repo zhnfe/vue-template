@@ -69,7 +69,8 @@ const operateIconClass = `
 const getFormitem = (item: DynamicItemType, index: number) => {
     return {
         ...item,
-        path: `${props.path}[${index}].${item.path}`
+        path: `${props.path}[${index}].${item.path}`,
+        parrentPath: `${props.path}[${index}]`
     }
 }
 const { modelValue } = useModelValue()

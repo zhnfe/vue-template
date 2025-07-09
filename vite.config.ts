@@ -17,6 +17,7 @@ export default defineConfig({
         vueJsx(),
         tailwindcss(),
         Components({
+            globs: ['src/components/icons/*.vue'],
             resolvers: [
                 NaiveUiResolver(),
                 IconResolver()
@@ -40,5 +41,8 @@ export default defineConfig({
             }
         }
     },
-    base: process.env.NODE_ENV === 'development' ? '/' : '/vue-template'
+    base: process.env.NODE_ENV === 'development' ? '/' : '/vue-template',
+    server: {
+        allowedHosts: true
+    }
 })

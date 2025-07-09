@@ -2,7 +2,7 @@ interface Menu {
     pid: number
     url: string
     title: string
-    icon: string
+    icon?: string
     children?: Menu[]
     [propName: string]: any
 
@@ -24,8 +24,13 @@ export const menus: Menu[] = [
             {
                 pid: 1,
                 url: 'dynamicFormDemo',
-                title: '动态表单示例',
+                title: '动态表单',
                 icon: 'cube-transparent'
+            },
+            {
+                pid: 2,
+                url: 'scrollComment',
+                title: '滚动评论'
             }
         ]
     }

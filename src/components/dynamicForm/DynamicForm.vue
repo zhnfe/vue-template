@@ -15,6 +15,7 @@
             <n-button
                 type="primary"
                 round
+                :loading="submitLoading"
                 @click="submit"
             >
                 Submit
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useTemplateRef } from 'vue'
+import { ref, useTemplateRef } from 'vue'
 import DynamicItem from './DynamicItem.vue'
 import { useInjectFormData } from '@/composables/dynamicForm'
 import { message } from '@/utils'
@@ -36,19 +37,23 @@ withDefaults(defineProps<Props>(), {
     labelPosition: 'top',
     showSaveButton: true
 })
-
+const submitLoading = ref(false)
 const { model, config, onSubmit } = useInjectFormData()
 const formRef = useTemplateRef('form')
 const submit = async () => {
+    submitLoading.value = true
     try {
         await formRef.value?.validate()
         onSubmit(model)
     }
     catch (e: unknown) {
         if (e instanceof Error) {
-            return
+            throw e
         }
         message.error('Please fill in the form correctly')
+    }
+    finally {
+        submitLoading.value = false
     }
 }
 </script>
