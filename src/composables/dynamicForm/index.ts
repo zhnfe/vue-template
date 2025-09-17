@@ -71,7 +71,7 @@ export const useModelValue = () => {
                     return get(target, key)
                 },
                 set(target, key, value) {
-                    return set(target, key, value)
+                    return !!set(target, key, value)
                 }
             })
         },

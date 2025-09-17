@@ -13,7 +13,7 @@ export default [
 
     {
         name: 'app/files-to-ignore',
-        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.nuxt/**', 'src/components/icons/**']
+        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.nuxt/**', 'src/components/icons/**', '**/.local/**']
     },
     ...vueConfig,
     ...pluginVue.configs['flat/strongly-recommended'],
