@@ -5,17 +5,22 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import tailwindcss from '@tailwindcss/vite'
-import generateIconClassPlugin from './plugins/generateIconClassPlugin'
+import { generateIconComponents, IconResolver } from './plugins/generateIconComponents'
 export default defineConfig({
+    define: {
+        __VUE_OPTIONS_API__: false
+    },
     plugins: [
-        generateIconClassPlugin(),
-        // iconComponentsPlugin(),
+        // generateIconClass(),
+        generateIconComponents(),
         vue(),
         vueJsx(),
         tailwindcss(),
         Components({
+            globs: ['src/components/icons/*.vue'],
             resolvers: [
-                NaiveUiResolver()
+                NaiveUiResolver(),
+                IconResolver()
             ],
             dts: 'src/types/components.d.ts'
         })
@@ -30,11 +35,14 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 manualChunks: {
-                    vue: ['vue', 'vue-router', 'pinia'],
+                    vendor: ['vue', 'vue-router', 'pinia', 'es-toolkit'],
                     naive: ['naive-ui']
                 }
             }
         }
     },
-    base: process.env.NODE_ENV === 'development' ? '/' : '/vue-template'
+    base: process.env.NODE_ENV === 'development' ? '/' : '/vue-template',
+    server: {
+        allowedHosts: true
+    }
 })

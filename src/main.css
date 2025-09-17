@@ -1,7 +1,6 @@
 @import "tailwindcss";
-@import "./assets/styles/icons.css";
 
-i[class^="i-"] {
+i.i-icon{
     --un-icon: var(--icon, url(/me.png));
     -webkit-mask: var(--un-icon) no-repeat;
     mask: var(--un-icon) no-repeat;
@@ -29,4 +28,16 @@ i[class^="i-"] {
     syntax: "<length>";
     initial-value: 55px;
     inherits: false;
+}
+
+.router-view {
+    animation: fade-in 0.5s ease-in-out;
+}
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

@@ -40,7 +40,7 @@ export const useInjectArrayItemId = <T>(obj: T) => {
  * @param param 动态表单数据对象，包含 `model` 和 `config` 属性。
  * @returns 返回动态表单数据对象，包含 `model`、`config` 和 `updateModel` 方法。
  */
-export const useDynamicFormData = <T extends AnyObject>({ model, config }: DynamicFormData<T>) => {
+export const useDynamicFormData = <T extends AnyObject>({ model, config, onSubmit }: DynamicFormData<T> & { onSubmit: (data: T) => void }) => {
     const formData = reactive({
         model: useInjectArrayItemId(model),
         config
@@ -50,7 +50,8 @@ export const useDynamicFormData = <T extends AnyObject>({ model, config }: Dynam
         ...formData,
         updateModel(data: T) {
             Object.assign(formData.model, useInjectArrayItemId(data))
-        }
+        },
+        onSubmit
     }
     provide('dynamicData', dynamicData)
     return dynamicData

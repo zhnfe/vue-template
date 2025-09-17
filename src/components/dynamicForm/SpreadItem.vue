@@ -18,7 +18,7 @@
                     class="flex items-center w-full px-3 py-2 bg-gray-50 cursor-pointer select-none"
                     @click="onTitleClick(index)"
                 >
-                    <i class="i-ArrowForwardIosOutlined transition-all" :class="open.includes(index) ? 'rotate-90' : ''" />
+                    <i-chevron-right class="transition-all" :class="open.includes(index) ? 'rotate-90' : ''" />
                     <div class="text-base">{{ `第${index + 1}项` }}</div>
                     <div class="ml-auto">
                         <n-button :disabled="index === 0" @click.stop="moveUp(index)">上移</n-button>

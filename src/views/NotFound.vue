@@ -17,9 +17,11 @@ const count = ref(5)
 let timer: number
 onMounted(() => {
     timer = setInterval(() => {
-        count.value--
         if (count.value === 0) {
             router.replace('/')
+        }
+        else {
+            count.value--
         }
     }, 1000)
 })

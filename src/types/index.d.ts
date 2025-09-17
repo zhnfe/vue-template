@@ -6,7 +6,13 @@ declare module 'vue-router' {
     }
 }
 
+import { DefineComponent } from 'vue'
 declare global {
     type AnyObject = Record<string, any>
+    type VueComponent = DefineComponent
+    declare module 'virtual:icon-components/*.vue' {
+        const component: VueComponent
+        export default component
+    }
 }
 export {}

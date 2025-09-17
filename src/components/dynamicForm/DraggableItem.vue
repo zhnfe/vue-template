@@ -11,9 +11,9 @@
         <template #header>
             <div class="text-base flex items-center mb-3">
                 <span class="text-lg">{{ title }}</span>
-                <i
+                <i-add-circle-outlined
                     v-if="!modelValue[path]?.length"
-                    class="i-AddCircleOutlined ml-5 cursor-pointer"
+                    class="ml-5 cursor-pointer"
                     style="width: 1.5em"
                     @click="add"
                 />
@@ -28,13 +28,13 @@
                     {{ index }}
                 </div>
                 <div :class="operateIconClass" class="gap-x-1.5 right-4 bg-white">
-                    <i
+                    <i-add-circle-outlined
                         v-if="index === modelValue[path].length - 1"
-                        class="i-AddCircleOutlined cursor-pointer"
+                        class="cursor-pointer"
                         @click="add"
                     />
-                    <i class="i-DeleteRound cursor-pointer" @click.stop="deleteItem(index)" />
-                    <i class="i-FileCopyRound cursor-pointer" @click.stop="copy(index)" />
+                    <i-delete-round class="cursor-pointer" @click.stop="deleteItem(index)" />
+                    <i-file-copy class="cursor-pointer" @click.stop="copy(index)" />
                 </div>
                 <div class="grid grid-cols-24 gap-x-6 px-3 my-3">
                     <dynamic-item
@@ -69,7 +69,8 @@ const operateIconClass = `
 const getFormitem = (item: DynamicItemType, index: number) => {
     return {
         ...item,
-        path: `${props.path}[${index}].${item.path}`
+        path: `${props.path}[${index}].${item.path}`,
+        parrentPath: `${props.path}[${index}]`
     }
 }
 const { modelValue } = useModelValue()

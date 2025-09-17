@@ -1,14 +1,14 @@
 <template>
     <h1 class="text-center text-2xl mb-2">Dynamic Form</h1>
-    <dynamic-form
-        @submit="onSubmit"
-    />
+    <dynamic-form />
+    <pre>{{ datastr }}</pre>
 </template>
 
 <script lang="ts" setup>
 import DynamicForm from '@/components/dynamicForm/DynamicForm.vue'
 import { useDynamicFormData } from '@/composables/dynamicForm'
-import { formConfig } from '@/config/testForm'
+import { formConfig2 } from '@/config/demo/dynamicDemo'
+import { computed } from 'vue'
 
 const { model } = useDynamicFormData({
     model: {
@@ -17,15 +17,16 @@ const { model } = useDynamicFormData({
             'pass'
         ]
     },
-    config: formConfig
+    config: formConfig2,
+    onSubmit: async data => {
+        console.log(JSON.stringify(data, null, 2))
+    }
 })
-
-// window.model = model
+const datastr = computed(() => {
+    return JSON.stringify(model, null, 2)
+})
 setTimeout(() => {
     model.switchTest = true
-}, 1500)
+}, 3500)
 
-const onSubmit = (data: AnyObject) => {
-    console.log(JSON.stringify(data, null, 2))
-}
 </script>

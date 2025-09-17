@@ -1,6 +1,8 @@
 <template>
-    <h1>demo view</h1>
+    <router-view v-slot="{ Component }">
+        <component :is="Component" ref="child" />
+    </router-view>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 </script>

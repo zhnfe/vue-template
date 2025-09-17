@@ -8,7 +8,7 @@ const vueConfig = defineConfigWithVueTs(
 export default [
     {
         name: 'app/files-to-lint',
-        files: ['**/*.{ts,mts,tsx,vue}']
+        files: ['**/*.{js,ts,mts,tsx,vue}']
     },
 
     {
