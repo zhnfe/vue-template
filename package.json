@@ -15,35 +15,35 @@
     },
     "engines": {
         "node": ">=22.0.0",
-        "pnpm": ">=9.0.0"
+        "pnpm": ">=10.0.0"
     },
     "dependencies": {
-        "es-toolkit": "^1.32.0",
-        "naive-ui": "^2.41.0",
-        "pinia": "^2.3.0",
-        "tailwindcss": "^4.0.13",
+        "es-toolkit": "^1.39.10",
+        "naive-ui": "^2.43.1",
+        "pinia": "^2.3.1",
+        "tailwindcss": "^4.1.13",
         "vue": "latest",
         "vue-router": "latest",
         "vuedraggable": "^4.1.0"
     },
     "devDependencies": {
-        "@stylistic/eslint-plugin": "^4.2.0",
-        "@tailwindcss/vite": "^4.0.13",
-        "@tsconfig/node22": "^22.0.0",
-        "@types/node": "^22.10.6",
-        "@vitejs/plugin-vue": "^5.2.1",
-        "@vitejs/plugin-vue-jsx": "^4.1.1",
-        "@vue/eslint-config-typescript": "^14.3.0",
+        "@stylistic/eslint-plugin": "^5.3.1",
+        "@tailwindcss/vite": "^4.1.13",
+        "@tsconfig/node22": "^22.0.2",
+        "@types/node": "^22.18.5",
+        "@vitejs/plugin-vue": "^6.0.1",
+        "@vitejs/plugin-vue-jsx": "^5.1.1",
+        "@vue/eslint-config-typescript": "^14.6.0",
         "@vue/tsconfig": "^0.7.0",
-        "eslint": "^9.18.0",
-        "eslint-plugin-vue": "^10.0.0",
-        "lint-staged": "^15.3.0",
+        "eslint": "^9.35.0",
+        "eslint-plugin-vue": "^10.4.0",
+        "lint-staged": "^16.1.6",
         "npm-run-all2": "^6.2.6",
-        "simple-git-hooks": "^2.11.1",
+        "simple-git-hooks": "^2.13.1",
         "typescript": "~5.7.3",
         "unplugin-vue-components": "^0.27.5",
-        "vite": "^6.0.7",
-        "vue-tsc": "^2.2.0"
+        "vite": "^7.1.5",
+        "vue-tsc": "^3.0.7"
     },
     "lint-staged": {
         "*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": "eslint --fix"
@@ -56,6 +56,9 @@
             "esbuild",
             "simple-git-hooks",
             "vue-demi"
+        ],
+        "ignoredBuiltDependencies": [
+            "@tailwindcss/oxide"
         ]
     }
 }
