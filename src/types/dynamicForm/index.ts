@@ -1,12 +1,12 @@
 import type { FormItemRule } from 'naive-ui'
-import type { VNode, VNodeChild } from 'vue'
-type NaiveEl = 'input' | 'card' | 'switch' | 'rate' | 'number' | 'date'
+import type { Component, VNode, VNodeChild } from 'vue'
+type NaiveEl = 'input' | 'card' | 'switch' | 'rate' | 'number' | 'date' | 'ratio' | 'select' | 'checkbox'
 type CustomEl = 'spread' | 'drag' | 'group'
 export type El = NaiveEl | CustomEl | keyof HTMLElementTagNameMap
 
 export interface DynamicItem<T extends AnyObject = AnyObject> {
     span?: number
-    el: El | VNode
+    el: El | VNode | Component
     /** 没有 path 和 label 时, 需要提供一个 v-for 使用的标识 */
     key?: string
     /** 给组件的 props, 通过 v-bind 全部传递 */

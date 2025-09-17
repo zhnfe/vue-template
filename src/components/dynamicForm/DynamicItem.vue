@@ -45,7 +45,7 @@
 import { useModelValue } from '@/composables/dynamicForm'
 import type { DynamicItem } from '@/types/dynamicForm'
 import { NInput, NCard, NSelect, NSwitch, NRate, NInputNumber, NDatePicker } from 'naive-ui'
-import { computed, h, watch, type VNode } from 'vue'
+import { computed, h, watch, type Component } from 'vue'
 import SpreadItem from './SpreadItem.vue'
 import DraggableItem from './DraggableItem.vue'
 import GroupItem from './GroupItem.vue'
@@ -53,13 +53,16 @@ import { omit } from 'es-toolkit'
 
 const defaultSapn = 12
 
-const components = {
+const components: Record<string, Component | {
+    component: Component
+    model: string
+    props?: object
+}> = {
     input: NInput,
     number: NInputNumber,
     date: {
         component: NDatePicker,
-        model: 'format-value',
-        emit: 'formatted-value'
+        model: 'formattedValue'
     },
     card: NCard,
     select: NSelect,
@@ -96,14 +99,14 @@ const getProps = () => {
 const getEl = () => {
     const elName = item.el
     if (typeof elName === 'string' && elName in components) {
-        const el = components[elName as keyof typeof components]
-        if (el.component) {
+        const el = components[elName]
+        if ('component' in el) {
             return h(el.component, {
                 [el.model]: modelValue.value[item.path!],
-                [`on-update:${el.emit}`](e: string | number) { modelValue.value[item.path!] = e }
+                [`onUpdate:${el.model}`](e: string | number) { modelValue.value[item.path!] = e }
             })
         }
-        return h(el as unknown as VNode, {
+        return h(el, {
             value: modelValue.value[item.path!],
             onUpdateValue: (e: string | number) => modelValue.value[item.path!] = e
         })

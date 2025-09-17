@@ -1,7 +1,6 @@
 {
     "recommendations": [
         "dbaeumer.vscode-eslint",
-        "formulahendry.auto-rename-tag",
         "usernamehw.errorlens",
         "vue.volar",
         "bradlc.vscode-tailwindcss"
