@@ -1,4 +1,4 @@
-import { FSWatcher, mkdirSync, readdirSync, readFileSync, watch } from 'fs'
+import { existsSync, FSWatcher, mkdirSync, readdirSync, readFileSync, watch } from 'fs'
 import { writeFile } from 'fs/promises'
 import { resolve } from 'path'
 import { Plugin } from 'vite'
@@ -80,7 +80,7 @@ export const makeIconResolver = (initOptions: Partial<MakeResolveOptions> = {}) 
         }
     }
 }
-
+let hasResolved = false
 export const makeIconPlugin = ({
     iconAttribute = 'icon'
 }: { iconAttribute?: string } = {}): Plugin[] => {
@@ -102,6 +102,25 @@ export const makeIconPlugin = ({
                 const component = componentTemplate.replace('@@svg@@', file.replace('<svg', `<svg ${iconAttribute}`))
                 components.set(name, component)
                 return component
+            }
+        }
+    }, {
+        // 这个插件用于解决 vite 首次引入启动时虚拟依赖报错问题
+        name: 'vite-ignore-icon-components-at-first',
+        enforce: 'pre',
+        apply: 'serve',
+        resolveId(id) {
+            if (hasResolved) {
+                return
+            }
+
+            if (existsSync('node_modules/.vite/deps')) {
+                hasResolved = true
+                return
+            }
+
+            if (id.startsWith(vid)) {
+                return 'src/App.vue'
             }
         }
     }, {
