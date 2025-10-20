@@ -5,22 +5,26 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 import tailwindcss from '@tailwindcss/vite'
-import { generateIconComponents, IconResolver } from './plugins/generateIconComponents'
+import { makeIconPlugin, makeIconResolver } from './plugins/makeIcon'
 export default defineConfig({
     define: {
         __VUE_OPTIONS_API__: false
     },
     plugins: [
-        // generateIconClass(),
-        generateIconComponents(),
+        makeIconPlugin(),
         vue(),
         vueJsx(),
         tailwindcss(),
         Components({
-            globs: ['src/components/icons/*.vue'],
+            include: [],
             resolvers: [
                 NaiveUiResolver(),
-                IconResolver()
+                makeIconResolver({
+                    customPath: 'src/assets/icons',
+                    modulePath: 'node_modules/@material-symbols/svg-400/outlined',
+                    typeFilePath: '',
+                    prefix: 'Icon'
+                })
             ],
             dts: 'src/types/components.d.ts'
         })

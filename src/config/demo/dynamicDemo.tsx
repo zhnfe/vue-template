@@ -15,6 +15,7 @@ export const formConfig: DynamicItem[] = [
     },
     {
         el: 'group',
+        span: 24,
         path: 'group',
         children: [
             {
@@ -30,7 +31,7 @@ export const formConfig: DynamicItem[] = [
                     return model.switchTest
                 },
                 clearOnHide: true,
-                title: 'Human Configuration',
+                label: 'Human Configuration',
                 children: [
                     {
                         el: 'input',
@@ -105,12 +106,13 @@ export const formConfig: DynamicItem[] = [
     },
     {
         el: 'drag',
+        span: 24,
         path: 'spreadTest',
         visible: (model: Record<string, any>) => {
             return model.switchTest
         },
         clearOnHide: true,
-        title: 'Human Configuration',
+        label: 'Human Configuration',
         initialValue: { spread1: true },
         children: [
             {
@@ -126,8 +128,9 @@ export const formConfig: DynamicItem[] = [
             },
             {
                 el: 'drag',
+                span: 24,
                 path: 'spreadInner',
-                title: 'Test Inner Configuration',
+                label: 'Test Inner Configuration',
                 initialValue: { input1: '11' },
                 children: [
                     {
@@ -158,13 +161,15 @@ export const formConfig: DynamicItem[] = [
         }
     },
     {
-        el: <div class="text5xl text-blue-500">hahaha</div>
+        el: <div class="text5xl text-blue-500">hahaha</div>,
+        key: 'hahaha'
     }
 ]
 
 export const formConfig2: DynamicItem[] = [
     {
         el: <div class="text-3xl mb-6 text-red-700">基础配置</div>,
+        key: 'baseConfigTitle',
         span: 24
     },
     {
@@ -341,10 +346,12 @@ export const formConfig2: DynamicItem[] = [
         label: '一层',
         span: 24,
         path: 'generalConfig.redeemInfo',
-        visible: model => {
-            return model.generalConfig?.isRedeemable
-        },
         children: [
+            {
+                el: 'input',
+                label: '资产分类',
+                path: 'test'
+            },
             {
                 el: 'drag',
                 label: '二层',

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-i.i-icon{
+/* i.i-icon{
     --un-icon: var(--icon, url(/me.png));
     -webkit-mask: var(--un-icon) no-repeat;
     mask: var(--un-icon) no-repeat;
@@ -10,9 +10,18 @@ i.i-icon{
     color: inherit;
     display: inline-block;
     width: 1.2em;
-    aspect-ratio: 1;
+    height: 1.2em;
     vertical-align: text-bottom;
     margin-right: 2px;
+} */
+
+@layer base {
+    [icon] {
+        width: 1.2em;
+        height: 1.2em;
+        fill: currentColor;
+        vertical-align: text-bottom;
+    }
 }
 .n-card {
     width: auto;

@@ -15,5 +15,8 @@
     "eslint.useFlatConfig": true,
     "[javascript]": {
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[tailwindcss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

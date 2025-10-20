@@ -26,9 +26,6 @@
             v-bind="getProps()"
             :style="{gridColumn: `span ${item.span ?? defaultSapn}`}"
             :is="getEl()"
-            :path="item.path"
-            :children="item.children"
-            :title="item.title || item.label"
         >
             <template
                 v-for="slot, key in item.slots"
@@ -51,7 +48,7 @@ import DraggableItem from './DraggableItem.vue'
 import GroupItem from './GroupItem.vue'
 import { omit } from 'es-toolkit'
 
-const defaultSapn = 12
+const defaultSapn = 24
 
 const components: Record<string, Component | {
     component: Component
@@ -86,8 +83,8 @@ const isFormItem = (() => {
 
 const { model, modelValue } = useModelValue()
 
-const nonPropsKeys = ['path', 'el', 'visible', 'parrentPath', 'clearOnHide',
-    'rules', 'span', 'title', 'slots', 'label', 'options'
+const nonPropsKeys = ['el', 'visible', 'parrentPath', 'clearOnHide',
+    'rules', 'span', 'slots', 'options'
 ] as const
 const getProps = () => {
     if (item.props) {

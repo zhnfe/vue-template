@@ -7,8 +7,8 @@
         :label-placement="labelPosition"
     >
         <dynamic-item
-            v-for="item in config"
-            :key="item.path || item.label || item.key"
+            v-for="item, index in config"
+            :key="item.path || item.label || item.key || index"
             :item="item"
         />
         <div v-if="showSaveButton" class="text-right col-span-24">

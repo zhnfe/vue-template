@@ -23,9 +23,6 @@ export interface DynamicItem<T extends AnyObject = AnyObject> {
     parrentPath?: string
     rules?: FormItemRule | FormItemRule[] | (<U extends AnyObject = AnyObject>(model: T, parentModel: U) => FormItemRule | FormItemRule[])
 
-    // 非表单项组件
-    title?: string
-
     /** 数组项初始值 */
     initialValue?: AnyObject
 

@@ -12,7 +12,7 @@ import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'
 import DynamicItem from './DynamicItem.vue'
 interface Props {
     path: string
-    title?: string
+    label?: string
     children: DynamicItemType[]
 }
 

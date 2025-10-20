@@ -1,6 +1,6 @@
 <template>
     <h1>
         Home Default
-        <i-github />
+        <IconGithub />
     </h1>
 </template>
