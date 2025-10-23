@@ -1,6 +1,6 @@
 <template>
     <aside
-        class="border-r-1 shrink-0 border-gray-200 relative transition-all duration-300"
+        class="border-r shrink-0 border-gray-200 relative transition-all duration-300"
         :class="{
             'w-12': collapsed,
             'w-65': !collapsed
@@ -14,7 +14,7 @@
             :class="{ '-rotate-180': collapsed }"
             @click="collapsed = !collapsed"
         >
-            <IconChevronLeft />
+            <IconChevronLeft class="block" />
         </div>
         <n-menu
             v-model:expanded-keys="expandedKeys"
