@@ -62,31 +62,31 @@ const open = ref([0])
 const { modelValue } = useModelValue()
 const props = defineProps<Props>()
 const add = () => {
-    if (!Array.isArray(modelValue.value[props.path])) {
-        modelValue.value[props.path] = [{}]
+    if (!Array.isArray(modelValue[props.path])) {
+        modelValue[props.path] = [{}]
         return
     }
-    modelValue.value[props.path].push({})
+    modelValue[props.path].push({})
 }
 const deleteItem = (index: number) => {
-    modelValue.value[props.path].splice(index, 1)
+    modelValue[props.path].splice(index, 1)
 }
 
 const moveUp = (index: number) => {
     if (index === 0) return
-    const temp = modelValue.value[props.path][index]
-    modelValue.value[props.path][index] = modelValue.value[props.path][index - 1]
-    modelValue.value[props.path][index - 1] = temp
+    const temp = modelValue[props.path][index]
+    modelValue[props.path][index] = modelValue[props.path][index - 1]
+    modelValue[props.path][index - 1] = temp
 }
 const moveDown = (index: number) => {
-    if (index === modelValue.value[props.path].length - 1) return
-    const temp = modelValue.value[props.path][index]
-    modelValue.value[props.path][index] = modelValue.value[props.path][index + 1]
-    modelValue.value[props.path][index + 1] = temp
+    if (index === modelValue[props.path].length - 1) return
+    const temp = modelValue[props.path][index]
+    modelValue[props.path][index] = modelValue[props.path][index + 1]
+    modelValue[props.path][index + 1] = temp
 }
 
 const copy = (index: number) => {
-    modelValue.value[props.path].splice(index, 0, { ...modelValue.value[props.path][index] })
+    modelValue[props.path].splice(index, 0, { ...modelValue[props.path][index] })
 }
 
 const onTitleClick = (index: number) => {

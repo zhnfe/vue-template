@@ -15,7 +15,7 @@ export const useInjectId = (obj: AnyObject, key = '_id') => {
     }
     Object.defineProperty(obj, key, {
         enumerable: false,
-        value: generateId()
+        value: Symbol()
     })
     return obj
 }

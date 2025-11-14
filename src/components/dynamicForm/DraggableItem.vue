@@ -47,8 +47,6 @@
                     />
                 </div>
             </div>
-            <!-- <template #item="{ index }"> -->
-            <!-- </template> -->
         </vue-draggable>
     </div>
 </template>
@@ -82,46 +80,19 @@ const { modelValue } = useModelValue()
 const props = defineProps<Props>()
 const add = () => {
     const newItem = useInjectId(cloneDeep(props.initialValue ?? {}), dynamicFormIdKey)
-    if (!Array.isArray(modelValue.value[props.path])) {
-        modelValue.value[props.path] = [newItem]
+    if (!Array.isArray(modelValue[props.path])) {
+        modelValue[props.path] = [newItem]
         return
     }
-    modelValue.value[props.path].push(newItem)
+    modelValue[props.path].push(newItem)
 }
 const deleteItem = (index: number) => {
-    modelValue.value[props.path].splice(index, 1)
+    modelValue[props.path].splice(index, 1)
 }
 
 const copy = (index: number) => {
-    const data = useInjectId(cloneDeep(modelValue.value[props.path][index]), dynamicFormIdKey)
-    modelValue.value[props.path].splice(index, 0, data)
+    const data = useInjectId(cloneDeep(modelValue[props.path][index]), dynamicFormIdKey)
+    modelValue[props.path].splice(index, 0, data)
 }
 
 </script>
-
-<!--
-    group: { name: "...", pull: [true, false, clone],
-    tag: 'td' // 默认div，设置draggable标签解析html标签
-    v-model：data // 绑定数据列表
-    put: [true, false, array] } //name相同的组可以互相拖动, pull可以写条件判断，是否允许拖走，put可以写条件判断，是否允许拖入
-    sort: true,  // 内部拖动排序列表
-    delay: 0, // 以毫秒为单位定义排序何时开始。
-    touchStartThreshold: 0, // px,在取消延迟拖动事件之前，点应该移动多少像素?
-    disabled: false, // 如果设置为真，则禁用sortable。
-    animation: 150,  // ms, 动画速度运动项目排序时，' 0 ' -没有动画。
-    handle: ".my-handle",  // 在列表项中拖动句柄选择器，设置某些地方拖动才有效。
-    filter: ".ignore-elements",  // 不能拖拽的选择器(字符串 class)
-    preventOnFilter: true, // 调用“event.preventDefault()”时触发“filter”
-    draggable: ".item",  // 指定元素中的哪些项应该是可拖动的class。
-    ghostClass: "sortable-ghost",  // 设置拖动元素的class的占位符的类名。
-    chosenClass: "sortable-chosen",  // 设置被选中的元素的class
-    dragClass: "sortable-drag",  //拖动元素的class。
-    forceFallback: false,  // 忽略HTML5的DnD行为，并强制退出。（h5里有个属性也是拖动，这里是为了去掉H5拖动对这个的影响）
-    fallbackClass: "sortable-fallback",  // 使用forceFallback时克隆的DOM元素的类名。
-    fallbackOnBody: false,  // 将克隆的DOM元素添加到文档的主体中。（默认放在被拖动元素的同级）
-    fallbackTolerance: 0, // 用像素指定鼠标在被视为拖拽之前应该移动的距离。
-    scroll: true, // or HTMLElement
-    scrollFn: function(offsetX, offsetY, originalEvent, touchEvt, hoverTargetEl) { ... },
-    scrollSensitivity: 30, // px
-    scrollSpeed: 10, // px
--->

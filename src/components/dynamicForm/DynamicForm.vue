@@ -10,6 +10,7 @@
             v-for="item, index in config"
             :key="item.path || item.label || item.key || index"
             :item="item"
+            :span="span"
         />
         <div v-if="showSaveButton" class="text-right col-span-24">
             <n-button
@@ -25,20 +26,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, useTemplateRef } from 'vue'
+import { provide, ref, useTemplateRef } from 'vue'
 import DynamicItem from './DynamicItem.vue'
 import { useInjectFormData } from '@/composables/dynamicForm'
 import { message } from '@/utils'
 interface Props {
     labelPosition?: 'top' | 'left'
     showSaveButton?: boolean
+    id?: symbol
 }
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     labelPosition: 'top',
-    showSaveButton: true
+    showSaveButton: true,
+    id: void 0
 })
+
+provide('id', props.id)
 const submitLoading = ref(false)
-const { model, config, onSubmit } = useInjectFormData()
+const { model, config, onSubmit, span } = useInjectFormData(props.id)
 const formRef = useTemplateRef('form')
 const submit = async () => {
     submitLoading.value = true

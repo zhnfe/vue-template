@@ -2,7 +2,7 @@
     <template v-if="visible">
         <n-form-item
             v-if="isFormItem"
-            :style="{gridColumn: `span ${item.span ?? defaultSapn}`}"
+            :style="{gridColumn: `span ${item.span ?? span}`}"
             :path="item.path"
             :label="item.label"
             :rule="rules"
@@ -24,7 +24,7 @@
         <component
             v-else
             v-bind="getProps()"
-            :style="{gridColumn: `span ${item.span ?? defaultSapn}`}"
+            :style="{gridColumn: `span ${item.span ?? span}`}"
             :is="getEl()"
         >
             <template
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useModelValue } from '@/composables/dynamicForm'
+import { useInjectFormData, useModelValue } from '@/composables/dynamicForm'
 import type { DynamicItem } from '@/types/dynamicForm'
 import { NInput, NCard, NSelect, NSwitch, NRate, NInputNumber, NDatePicker } from 'naive-ui'
 import { computed, h, watch, type Component } from 'vue'
@@ -47,8 +47,6 @@ import SpreadItem from './SpreadItem.vue'
 import DraggableItem from './DraggableItem.vue'
 import GroupItem from './GroupItem.vue'
 import { omit } from 'es-toolkit'
-
-const defaultSapn = 24
 
 const components: Record<string, Component | {
     component: Component
@@ -75,6 +73,7 @@ interface Props {
 }
 
 const { item } = defineProps<Props>()
+const { span } = useInjectFormData()
 
 const isFormItem = (() => {
     const notFormEl = ['spread', 'drag', 'group']
@@ -99,13 +98,13 @@ const getEl = () => {
         const el = components[elName]
         if ('component' in el) {
             return h(el.component, {
-                [el.model]: modelValue.value[item.path!],
-                [`onUpdate:${el.model}`](e: string | number) { modelValue.value[item.path!] = e }
+                [el.model]: modelValue[item.path!],
+                [`onUpdate:${el.model}`](e: string | number) { modelValue[item.path!] = e }
             })
         }
         return h(el, {
-            value: modelValue.value[item.path!],
-            onUpdateValue: (e: string | number) => modelValue.value[item.path!] = e
+            value: modelValue[item.path!],
+            onUpdateValue: (e: string | number) => modelValue[item.path!] = e
         })
     }
     return h(elName)
@@ -113,7 +112,7 @@ const getEl = () => {
 const visible = (() => {
     const visible = item.visible
     if (typeof visible === 'function') {
-        return computed(() => visible(model, modelValue.value[item.parrentPath || '']))
+        return computed(() => visible(model, modelValue[item.parrentPath || '']))
     }
     return visible ?? true
 })()
@@ -121,7 +120,7 @@ const visible = (() => {
 const rules = (() => {
     const rules = item.rules
     if (typeof rules === 'function') {
-        return computed(() => rules(model, modelValue.value[item.parrentPath || '']))
+        return computed(() => rules(model, modelValue[item.parrentPath || '']))
     }
     return rules
 })()
@@ -129,7 +128,7 @@ const rules = (() => {
 const options = (() => {
     const options = item.props?.options || item.options
     if (typeof options === 'function') {
-        return computed(() => options(model, modelValue.value[item.parrentPath || '']))
+        return computed(() => options(model, modelValue[item.parrentPath || '']))
     }
     return options
 })()
@@ -137,7 +136,7 @@ const options = (() => {
 if (item.clearOnHide && typeof visible === 'object') {
     watch(() => visible.value, val => {
         if (!val && item.clearOnHide && item.path) {
-            modelValue.value[item.path] = undefined
+            modelValue[item.path] = undefined
         }
     })
 }
