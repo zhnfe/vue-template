@@ -19,6 +19,6 @@ if (import.meta.env.PROD) {
             message.info('发现新版本，请刷新页面', { duration: 0 })
             clearInterval(timer)
         }
-    }, 5000)
+    }, 30 * 1000)
 }
 </script>

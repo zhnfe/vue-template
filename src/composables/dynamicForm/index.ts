@@ -1,6 +1,6 @@
 import { h, inject, reactive } from 'vue'
 import type { DynamicFormData } from '@/types/dynamicForm'
-import { get, set } from 'es-toolkit/compat'
+import { get, isObject, set } from 'es-toolkit/compat'
 import { useInjectId } from '@/utils'
 import DynamicForm from '@/components/dynamicForm/DynamicForm.vue'
 export const dynamicFormIdKey = '_formId'
@@ -12,24 +12,22 @@ export const dynamicFormIdKey = '_formId'
  *   model.arrayItems = useInjectArrayItemId([...])
  * ```
 */
-export const useInjectArrayItemId = <T>(obj: T) => {
-    if (obj === null || typeof obj !== 'object') {
+export const useInjectArrayItemId = <T extends AnyObject>(obj: T) => {
+    if (!isObject(obj)) {
         return obj
     }
     // 如果是数组，为每个元素添加_formId
     if (Array.isArray(obj)) {
         obj.forEach(item => {
-            if (typeof item === 'object' && item !== null) {
+            if (isObject(item)) {
                 useInjectId(item, dynamicFormIdKey)
                 useInjectArrayItemId(item)
             }
         })
     }
     else {
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                obj[key] = useInjectArrayItemId(obj[key])
-            }
+        for (const key of Object.keys(obj)) {
+            useInjectArrayItemId(obj[key])
         }
     }
     return obj
@@ -56,7 +54,7 @@ export const useDynamicFormData = <T extends AnyObject>(options: DynamicFormData
         ...formData,
         onSubmit,
         span: options.span ?? 24,
-        DynamicForm: () => h(DynamicForm, { id, onVnodeUnmounted() { injectModelMap.delete(id) } })
+        DynamicForm: (props: { message?: string }) => h(DynamicForm, { ...props, id, onVnodeUnmounted() { injectModelMap.delete(id) } })
     }
     injectModelMap.set(id, dynamicData)
     return dynamicData

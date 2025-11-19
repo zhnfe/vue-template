@@ -143,14 +143,14 @@ if (item.clearOnHide && typeof visible === 'object') {
 
 const getSlot = (slot: unknown, value: unknown) => {
     if (typeof slot !== 'function') {
-        return h(() => slot ?? '')
+        return () => slot ?? ''
     }
     const content = slot(value)
     // is vnode
     if (typeof content === 'object') {
         return slot(value)
     }
-    return h(() => content ?? '')
+    return () => content ?? ''
 }
 
 </script>

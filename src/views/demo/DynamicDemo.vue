@@ -5,7 +5,7 @@
 
     <search-form />
     <h2 class="text-xl my-2">User Form</h2>
-    <user-form />
+    <user-form message="sssss" />
 
     <h2 class="text-xl my-2">Test Form</h2>
     <TestForm />
@@ -13,8 +13,6 @@
 
 <script lang="ts" setup>
 import { useDynamicFormData } from '@/composables/dynamicForm'
-// import { formConfig2 } from '@/config/demo/dynamicDemo'
-// import { computed } from 'vue'
 
 const { DynamicForm: UserForm } = useDynamicFormData({
     span: 13,
