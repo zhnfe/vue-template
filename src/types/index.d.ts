@@ -10,7 +10,7 @@ import { DefineComponent } from 'vue'
 declare global {
     type AnyObject = Record<any, any>
     type VueComponent = DefineComponent
-    declare module 'virtual:icon-components/*.vue' {
+    declare module '~vic/*' {
         const component: VueComponent
         export default component
     }

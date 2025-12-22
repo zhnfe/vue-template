@@ -3,7 +3,7 @@ import path from 'path'
 import type { ComponentResolverObject } from 'unplugin-vue-components/types'
 import type { Plugin } from 'vite'
 
-export const iconComponentsDir = 'virtual:icon-components/'
+export const iconComponentsDir = '~vic/'
 const iconFileDir = 'src/assets/icons/'
 // 短横线转成大写驼峰
 const toPascalCase = (filename: string) => {
@@ -64,7 +64,7 @@ export function generateIconComponents(): Plugin[] {
         },
         load(id) {
             if (id.startsWith(iconComponentsDir)) {
-                // id: 'virtual:icon-components/IDeleteRound.vue'
+                // id: '~vic/IDeleteRound'
                 return iconComponents[id]
             }
             return

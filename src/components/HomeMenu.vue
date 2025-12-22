@@ -33,10 +33,10 @@ import { ref, type VNode } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { getMenuPath, menus } from '@/config/menu'
 import type { MenuMixedOption } from 'naive-ui/es/menu/src/interface'
-import IconHome from 'virtual:icon-components/IconHome.vue'
-import IconDeployedCodeFill from 'virtual:icon-components/IconDeployedCodeFill.vue'
-import IconTerminal from 'virtual:icon-components/IconTerminal.vue'
-import IconDeployedCode from 'virtual:icon-components/IconDeployedCode.vue'
+import IconHome from '~vic/IconHome'
+import IconDeployedCodeFill from '~vic/IconDeployedCodeFill'
+import IconTerminal from '~vic/IconTerminal'
+import IconDeployedCode from '~vic/IconDeployedCode'
 interface MenuItem {
     pid: number
     title: string

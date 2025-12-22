@@ -1,7 +1,8 @@
-import { existsSync, FSWatcher, mkdirSync, readdirSync, readFileSync, watch } from 'fs'
+import { FSWatcher, mkdirSync, readdirSync, readFileSync, watch } from 'fs'
 import { writeFile } from 'fs/promises'
 import { resolve } from 'path'
 import { Plugin } from 'vite'
+import { compileTemplate } from 'vue/compiler-sfc'
 
 const toCamelCase = (str: string) => {
     return str
@@ -10,12 +11,12 @@ const toCamelCase = (str: string) => {
         .replace(/^./, char => char.toUpperCase())
 }
 const rootPath = process.cwd()
-const vid = 'virtual:icon-components/'
+const vid = '~vic/'
 const components = new Map<string, string>()
 const files = new Map<string, string>()
 let watcher: FSWatcher | null = null
 
-const componentTemplate = '<template>@@svg@@</template>'
+// const componentTemplate = '<template>@@svg@@</template>'
 const typeTemplate = `import type { DefineComponent } from 'vue'
 declare module 'vue' {
     export interface GlobalComponents {
@@ -76,11 +77,11 @@ export const makeIconResolver = (initOptions: Partial<MakeResolveOptions> = {}) 
                 console.warn('\x1B[31m', `icon '${name}' not found`)
                 return
             }
-            return `${vid}${name}.vue`
+            return `${vid}${name}`
         }
     }
 }
-let hasResolved = false
+
 export const makeIconPlugin = ({
     iconAttribute = 'icon'
 }: { iconAttribute?: string } = {}): Plugin[] => {
@@ -88,7 +89,7 @@ export const makeIconPlugin = ({
         name: 'make-icon-plugin',
         resolveId(id) {
             if (id.startsWith(vid)) {
-                return `${id}`
+                return id
             }
         },
         load(id) {
@@ -99,28 +100,14 @@ export const makeIconPlugin = ({
                 }
                 const filePath = files.get(name)!
                 const file = readFileSync(filePath, { encoding: 'utf-8' })
-                const component = componentTemplate.replace('@@svg@@', file.replace('<svg', `<svg ${iconAttribute}`))
+                const { code } = compileTemplate({
+                    filename: name,
+                    id: id,
+                    source: file.replace('<svg', `<svg ${iconAttribute}`)
+                })
+                const component = code.replace('export function', 'export default function')
                 components.set(name, component)
                 return component
-            }
-        }
-    }, {
-        // 这个插件用于解决 vite 首次引入启动时虚拟依赖报错问题
-        name: 'vite-ignore-icon-components-at-first',
-        enforce: 'pre',
-        apply: 'serve',
-        resolveId(id) {
-            if (hasResolved) {
-                return
-            }
-
-            if (existsSync('node_modules/.vite/deps')) {
-                hasResolved = true
-                return
-            }
-
-            if (id.startsWith(vid)) {
-                return 'src/App.vue'
             }
         }
     }, {
