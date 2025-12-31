@@ -65,8 +65,8 @@ export default [
             'vue/singleline-html-element-content-newline': 'off',
             'vue/html-self-closing': ['error', {
                 html: {
-                    void: 'always',
-                    normal: 'always',
+                    void: 'never',
+                    normal: 'any',
                     component: 'always'
                 },
                 svg: 'always',

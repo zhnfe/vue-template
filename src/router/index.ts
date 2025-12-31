@@ -43,6 +43,11 @@ const routes: RouteRecordRaw[] = [
                 ]
             }
         ]
+    },
+    {
+        path: '/hero',
+        name: 'hero',
+        component: () => import('@/views/Hero.vue')
     }
 ]
 

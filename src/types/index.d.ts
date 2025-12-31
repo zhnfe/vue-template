@@ -14,5 +14,13 @@ declare global {
         const component: VueComponent
         export default component
     }
+    interface HighlightRegistry {
+        clear(): void
+        delete(key: string): boolean
+        has(key: string): boolean
+        set(key: string, value: Highlight): void
+        get(key: string): Highlight | undefined
+        readonly size: number
+    }
 }
 export {}
