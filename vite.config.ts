@@ -35,15 +35,7 @@ export default defineConfig({
         }
     },
     build: {
-        target: 'esnext',
-        rollupOptions: {
-            output: {
-                manualChunks: {
-                    vendor: ['vue', 'vue-router', 'pinia', 'es-toolkit'],
-                    naive: ['naive-ui']
-                }
-            }
-        }
+        target: 'esnext'
     },
     base: process.env.NODE_ENV === 'development' ? '/' : '/vue-template',
     server: {

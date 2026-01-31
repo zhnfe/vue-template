@@ -10,7 +10,6 @@
             v-for="item, index in config"
             :key="item.path || item.label || item.key || index"
             :item="item"
-            :span="span"
         />
         <div v-if="showSaveButton" class="text-right col-span-24">
             <n-button
@@ -43,7 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 provide('id', props.id)
 const submitLoading = ref(false)
-const { model, config, onSubmit, span } = useInjectFormData(props.id)
+const { model, config, onSubmit } = useInjectFormData(props.id)
 const formRef = useTemplateRef('form')
 const submit = async () => {
     submitLoading.value = true

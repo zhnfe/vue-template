@@ -9,17 +9,9 @@
                 @click="add"
             />
         </div>
-        <vue-draggable
-            v-model="modelValue[path]"
-            :item-key="dynamicFormIdKey"
-            :animation="200"
-            handle=".mover"
-            ghost-class="bg-gray-100"
-            chosen-class="bg-gray-100"
-            drag-class="bg-gray-100!"
-        >
+        <div ref="sortableRef">
             <div
-                v-for="item, index in modelValue[path]"
+                v-for="item, index in modelValue[path] as Array<AnyObject>"
                 :key="item[dynamicFormIdKey]"
                 :class="dragBorderClass"
                 class="mb-8 p-4 pb-0 rounded-lg relative"
@@ -47,16 +39,17 @@
                     />
                 </div>
             </div>
-        </vue-draggable>
+        </div>
     </div>
 </template>
 <script lang="ts" setup>
 import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'
 import DynamicItem from './DynamicItem.vue'
-import { VueDraggable } from 'vue-draggable-plus'
 import { dynamicFormIdKey, useModelValue } from '@/composables/dynamicForm'
 import { useInjectId } from '@/utils'
 import { cloneDeep } from 'es-toolkit'
+import { useTemplateRef } from 'vue'
+import { useSortable } from '@/composables'
 interface Props {
     label: string
     path: string
@@ -78,6 +71,20 @@ const getFormitem = (item: DynamicItemType, index: number) => {
 }
 const { modelValue } = useModelValue()
 const props = defineProps<Props>()
+
+useSortable({
+    selector: useTemplateRef('sortableRef'),
+    ghostClass: 'bg-gray-100!',
+    chosenClass: 'bg-gray-100',
+    handle: '.mover',
+    onEnd: ({ oldIndex, newIndex }) => {
+        if (newIndex === void 0 || oldIndex === 0 || newIndex === oldIndex) {
+            return
+        }
+        const [deleted] = modelValue[props.path].splice(oldIndex, 1)
+        modelValue[props.path].splice(newIndex, 0, deleted)
+    }
+})
 const add = () => {
     const newItem = useInjectId(cloneDeep(props.initialValue ?? {}), dynamicFormIdKey)
     if (!Array.isArray(modelValue[props.path])) {

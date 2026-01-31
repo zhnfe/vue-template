@@ -9,10 +9,10 @@
 
         <div class="border border-gray-200 rounded-xl overflow-hidden">
             <div
-                v-for="_item, index in modelValue[path]"
+                v-for="_item, index in modelValue[path] as Array<AnyObject>"
                 :key="index"
                 :name="index"
-                class="not-last:border-b-1 border-gray-200"
+                class="not-last:border-b border-gray-200"
             >
                 <div
                     class="flex items-center w-full px-3 py-2 bg-gray-50 cursor-pointer select-none"
