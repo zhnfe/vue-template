@@ -1,5 +1,6 @@
-import { watch, onMounted, type Ref } from 'vue'
+import type { Ref } from 'vue'
 import Sortable from 'sortablejs'
+import { onMounted, watch } from 'vue'
 
 export function useSortable(
     sortOptions: Sortable.Options & { selector: string | Ref<HTMLElement | Nil> },
@@ -15,7 +16,7 @@ export function useSortable(
     }
 
     for (const [key, value] of Object.entries(observeOptions)) {
-        watch(value, newVal => {
+        watch(value, (newVal) => {
             sortable.value?.option(key as keyof Sortable.Options, newVal)
         })
     }

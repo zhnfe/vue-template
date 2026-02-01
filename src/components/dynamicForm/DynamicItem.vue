@@ -2,7 +2,7 @@
     <template v-if="visible">
         <n-form-item
             v-if="isFormItem"
-            :style="{gridColumn: `span ${item.span ?? span}`}"
+            :style="{ gridColumn: `span ${item.span ?? span}` }"
             :path="item.path"
             :label="item.label"
             :rule="rules"
@@ -22,10 +22,10 @@
             </component>
         </n-form-item>
         <component
-            v-else
             v-bind="getProps()"
-            :style="{gridColumn: `span ${item.span ?? span}`}"
             :is="getEl()"
+            v-else
+            :style="{ gridColumn: `span ${item.span ?? span}` }"
         >
             <template
                 v-for="slot, key in item.slots"
@@ -39,14 +39,17 @@
 </template>
 
 <script lang="ts" setup>
-import { useInjectFormData, useModelValue } from '@/composables/dynamicForm'
+import type { Component } from 'vue'
 import type { DynamicItem } from '@/types/dynamicForm'
-import { NInput, NCard, NSelect, NSwitch, NRate, NInputNumber, NDatePicker } from 'naive-ui'
-import { computed, h, watch, type Component } from 'vue'
-import SpreadItem from './SpreadItem.vue'
+import { omit } from 'es-toolkit'
+import { NCard, NDatePicker, NInput, NInputNumber, NRate, NSelect, NSwitch } from 'naive-ui'
+import { computed, h, watch } from 'vue'
+import { useInjectFormData, useModelValue } from '@/composables/dynamicForm'
 import DraggableItem from './DraggableItem.vue'
 import GroupItem from './GroupItem.vue'
-import { omit } from 'es-toolkit'
+import SpreadItem from './SpreadItem.vue'
+
+const { item } = defineProps<Props>()
 
 const components: Record<string, Component | {
     component: Component
@@ -72,7 +75,6 @@ interface Props {
     item: DynamicItem
 }
 
-const { item } = defineProps<Props>()
 const { span } = useInjectFormData()
 
 const isFormItem = (() => {
@@ -82,9 +84,7 @@ const isFormItem = (() => {
 
 const { model, modelValue } = useModelValue()
 
-const nonPropsKeys = ['el', 'visible', 'parrentPath', 'clearOnHide',
-    'rules', 'span', 'slots', 'options'
-] as const
+const nonPropsKeys = ['el', 'visible', 'parrentPath', 'clearOnHide', 'rules', 'span', 'slots', 'options'] as const
 const getProps = () => {
     if (item.props) {
         return item.props
@@ -134,7 +134,7 @@ const options = (() => {
 })()
 
 if (item.clearOnHide && typeof visible === 'object') {
-    watch(() => visible.value, val => {
+    watch(() => visible.value, (val) => {
         if (!val && item.clearOnHide && item.path) {
             modelValue[item.path] = undefined
         }
@@ -152,5 +152,4 @@ const getSlot = (slot: unknown, value: unknown) => {
     }
     return () => content ?? ''
 }
-
 </script>

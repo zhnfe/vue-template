@@ -1,16 +1,17 @@
-import fs from 'fs'
-import path from 'path'
 import type { ComponentResolverObject } from 'unplugin-vue-components/types'
 import type { Plugin } from 'vite'
+import fs from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
 
 export const iconComponentsDir = '~vic/'
 const iconFileDir = 'src/assets/icons/'
 // 短横线转成大写驼峰
-const toPascalCase = (filename: string) => {
+function toPascalCase(filename: string) {
     return filename.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('')
 }
 
-const generateIcon = (file: string) => {
+function generateIcon(file: string) {
     return `<template><i class="i-icon" :style="style" /></template>
 <script setup>
 import icon from '@/assets/icons/${file}'
@@ -26,10 +27,10 @@ export function generateIconComponents(): Plugin[] {
     const generateComponents = () => {
         const files = fs.readdirSync(iconsDir)
         iconComponents = {}
-        files.forEach(file => {
-            const componentName = 'I' + path.basename(toPascalCase(file), '.svg')
+        files.forEach((file) => {
+            const componentName = `I${path.basename(toPascalCase(file), '.svg')}`
             const fileContent = generateIcon(file)
-            iconComponents[iconComponentsDir + componentName + '.vue'] = fileContent
+            iconComponents[`${iconComponentsDir + componentName}.vue`] = fileContent
         })
     }
 
@@ -60,14 +61,12 @@ export function generateIconComponents(): Plugin[] {
             if (id.startsWith(iconComponentsDir)) {
                 return id
             }
-            return
         },
         load(id) {
             if (id.startsWith(iconComponentsDir)) {
                 // id: '~vic/IDeleteRound'
                 return iconComponents[id]
             }
-            return
         },
         hotUpdate(options) {
             if (options.file.includes(iconFileDir)) {
@@ -84,7 +83,7 @@ export function IconResolver(): ComponentResolverObject {
     return {
         type: 'component',
         resolve(name) {
-            if (/^I[A-Z].*?/.test(name)) {
+            if (/^I[A-Z].*/.test(name)) {
                 return `${iconComponentsDir}${name}.vue`
             }
         }

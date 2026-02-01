@@ -30,10 +30,10 @@
                 <div class="grid transition-all" :class="open.includes(index) ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'">
                     <div class="overflow-hidden">
                         <div class="grid grid-cols-24 gap-x-6 px-3 my-3">
-                            <dynamic-item
+                            <DynamicItem
                                 v-for="formItem, formIndex in children"
-                                :item="getFormitem(formItem, index)"
                                 :key="formIndex"
+                                :item="getFormitem(formItem, index)"
                             />
                         </div>
                     </div>
@@ -42,16 +42,19 @@
         </div>
     </n-card>
 </template>
+
 <script lang="ts" setup>
 import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'
-import DynamicItem from './DynamicItem.vue'
-import { useModelValue } from '@/composables/dynamicForm'
 import { ref } from 'vue'
+import { useModelValue } from '@/composables/dynamicForm'
+import DynamicItem from './DynamicItem.vue'
+
 interface Props {
     label: string
     path: string
     children: DynamicItemType[]
 }
+const props = defineProps<Props>()
 const getFormitem = (item: DynamicItemType, index: number) => {
     return {
         ...item,
@@ -60,7 +63,6 @@ const getFormitem = (item: DynamicItemType, index: number) => {
 }
 const open = ref([0])
 const { modelValue } = useModelValue()
-const props = defineProps<Props>()
 const add = () => {
     if (!Array.isArray(modelValue[props.path])) {
         modelValue[props.path] = [{}]

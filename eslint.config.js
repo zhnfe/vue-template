@@ -1,39 +1,28 @@
-import pluginVue from 'eslint-plugin-vue'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import stylistic from '@stylistic/eslint-plugin'
+import antfu from '@antfu/eslint-config'
 
-const vueConfig = defineConfigWithVueTs(
-    vueTsConfigs.strict
-)
-export default [
+export default antfu(
     {
-        name: 'app/files-to-lint',
-        files: ['**/*.{js,ts,mts,tsx,vue}']
-    },
-
-    {
-        name: 'app/files-to-ignore',
-        ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.nuxt/**', 'src/components/icons/**', '**/.local/**']
-    },
-    ...vueConfig,
-    ...pluginVue.configs['flat/strongly-recommended'],
-    {
-        rules: {
-            '@typescript-eslint/no-non-null-assertion': 'off',
-            '@typescript-eslint/no-explicit-any': 'off'
+        stylistic: {
+            indent: 4
+        },
+        formatters: {
+            css: true,
+            html: true,
+            markdown: 'prettier'
         }
     },
     {
-        plugins: {
-            '@stylistic': stylistic
-        },
         rules: {
-            ...stylistic.configs['recommended'].rules,
-            '@stylistic/indent': ['error', 4],
-            '@stylistic/comma-dangle': ['error', 'never'],
-            '@stylistic/quote-props': ['error', 'as-needed'],
-            '@stylistic/function-call-spacing': ['error', 'never'],
-            '@stylistic/arrow-parens': ['error', 'as-needed']
+            'style/comma-dangle': ['error', 'never'],
+            'antfu/if-newline': 'off',
+            'yaml/indent': ['error', 2]
+        }
+    },
+    {
+        name: 'for node env files',
+        files: ['plugins/**/*.ts', 'vite.config.ts'],
+        rules: {
+            'no-console': 'off'
         }
     },
     {
@@ -47,6 +36,8 @@ export default [
             }
         },
         rules: {
+            'antfu/top-level-function': 'off',
+            'vue/block-order': 'off',
             'vue/max-attributes-per-line': ['error', {
                 singleline: {
                     max: 2
@@ -78,4 +69,4 @@ export default [
             }]
         }
     }
-]
+)

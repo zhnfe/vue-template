@@ -7,6 +7,7 @@
         <component :is="node" />
     </div>
 </template>
+
 <script setup lang="tsx">
 import { h } from 'vue'
 

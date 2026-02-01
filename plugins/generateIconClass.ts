@@ -1,6 +1,7 @@
-import fs from 'fs'
-import path from 'path'
 import type { Plugin } from 'vite'
+import fs from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
 
 export function generateIconClass(): Plugin {
     const iconsDir = path.join(process.cwd(), 'src/assets/icons')
@@ -15,7 +16,7 @@ export function generateIconClass(): Plugin {
 
             let cssContent = ''
 
-            files.forEach(file => {
+            files.forEach((file) => {
                 if (path.extname(file) === '.svg') {
                     const fileName = path.basename(file, '.svg')
                     const className = `.i-${fileName}`
@@ -25,13 +26,13 @@ export function generateIconClass(): Plugin {
                 }
             })
 
-            fs.mkdir(path.dirname(cssFilePath), { recursive: true }, err => {
+            fs.mkdir(path.dirname(cssFilePath), { recursive: true }, (err) => {
                 if (err) {
                     console.error('创建目录出错:', err)
                     return
                 }
 
-                fs.writeFile(cssFilePath, cssContent, err => {
+                fs.writeFile(cssFilePath, cssContent, (err) => {
                     if (err) {
                         console.error('写入 CSS 文件出错:', err)
                         return

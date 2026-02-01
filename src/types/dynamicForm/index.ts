@@ -1,5 +1,6 @@
 import type { FormItemRule } from 'naive-ui'
 import type { Component, VNode, VNodeChild } from 'vue'
+
 type NaiveEl = 'input' | 'card' | 'switch' | 'rate' | 'number' | 'date' | 'ratio' | 'select' | 'checkbox'
 type CustomEl = 'spread' | 'drag' | 'group'
 export type El = NaiveEl | CustomEl | keyof HTMLElementTagNameMap
@@ -11,7 +12,7 @@ export interface DynamicItem<T extends AnyObject = AnyObject> {
     key?: string
     /** 给组件的 props, 通过 v-bind 全部传递 */
     props?: Record<string, unknown>
-    visible?<U extends AnyObject = AnyObject>(model: T, currentModel: U): boolean
+    visible?: <U extends AnyObject = AnyObject>(model: T, currentModel: U) => boolean
     slots?: Record<string, VNodeChild | (<T extends never>(scoped: T) => VNodeChild)>
     clearOnHide?: boolean
     children?: DynamicItem<T>[]

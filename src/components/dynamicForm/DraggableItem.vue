@@ -32,30 +32,33 @@
                     <IconFileCopy class="cursor-pointer" @click.stop="copy(index)" />
                 </div>
                 <div class="grid grid-cols-24 gap-x-6 px-3 my-3">
-                    <dynamic-item
+                    <DynamicItem
                         v-for="formItem, formIndex in children"
-                        :item="getFormitem(formItem, index)"
                         :key="formIndex"
+                        :item="getFormitem(formItem, index)"
                     />
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script lang="ts" setup>
 import type { DynamicItem as DynamicItemType } from '@/types/dynamicForm'
-import DynamicItem from './DynamicItem.vue'
-import { dynamicFormIdKey, useModelValue } from '@/composables/dynamicForm'
-import { useInjectId } from '@/utils'
 import { cloneDeep } from 'es-toolkit'
 import { useTemplateRef } from 'vue'
 import { useSortable } from '@/composables'
+import { dynamicFormIdKey, useModelValue } from '@/composables/dynamicForm'
+import { useInjectId } from '@/utils'
+import DynamicItem from './DynamicItem.vue'
+
 interface Props {
     label: string
     path: string
     initialValue?: AnyObject
     children: DynamicItemType[]
 }
+const props = defineProps<Props>()
 const dragBorderClass = 'border border-dashed border-gray-300'
 const operateIconClass = `
     absolute bottom-0 ${dragBorderClass}
@@ -70,8 +73,6 @@ const getFormitem = (item: DynamicItemType, index: number) => {
     }
 }
 const { modelValue } = useModelValue()
-const props = defineProps<Props>()
-
 useSortable({
     selector: useTemplateRef('sortableRef'),
     ghostClass: 'bg-gray-100!',
@@ -101,5 +102,4 @@ const copy = (index: number) => {
     const data = useInjectId(cloneDeep(modelValue[props.path][index]), dynamicFormIdKey)
     modelValue[props.path].splice(index, 0, data)
 }
-
 </script>

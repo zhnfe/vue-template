@@ -1,11 +1,13 @@
-// https://vitejs.dev/config/
-import { defineConfig } from 'vite'
+import process from 'node:process'
+import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
-import tailwindcss from '@tailwindcss/vite'
+import Components from 'unplugin-vue-components/vite'
+// https://vitejs.dev/config/
+import { defineConfig } from 'vite'
 import { makeIconPlugin, makeIconResolver } from './plugins/makeIcon'
+
 export default defineConfig({
     define: {
         __VUE_OPTIONS_API__: false

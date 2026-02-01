@@ -1,5 +1,6 @@
+import type { RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import NotFound from '@/views/NotFound.vue'
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
     {
@@ -51,7 +52,7 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach(guard => {
+router.beforeEach((guard) => {
     const metaTitle = guard.meta.documentTitle
     if (metaTitle) {
         document.title = `${metaTitle} \| ${import.meta.env.VITE_DOCUMENT_TITLE}`

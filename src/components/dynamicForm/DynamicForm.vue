@@ -1,12 +1,12 @@
 <template>
     <n-form
-        class="grid items-start grid-cols-24 gap-x-4 max-sm:gap-x-2"
         ref="form"
+        class="grid items-start grid-cols-24 gap-x-4 max-sm:gap-x-2"
         v-bind="$attrs"
         :model="model"
         :label-placement="labelPosition"
     >
-        <dynamic-item
+        <DynamicItem
             v-for="item, index in config"
             :key="item.path || item.label || item.key || index"
             :item="item"
@@ -26,9 +26,10 @@
 
 <script lang="ts" setup>
 import { provide, ref, useTemplateRef } from 'vue'
-import DynamicItem from './DynamicItem.vue'
 import { useInjectFormData } from '@/composables/dynamicForm'
 import { message } from '@/utils'
+import DynamicItem from './DynamicItem.vue'
+
 interface Props {
     labelPosition?: 'top' | 'left'
     showSaveButton?: boolean

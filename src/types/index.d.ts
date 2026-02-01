@@ -1,3 +1,5 @@
+import type { DefineComponent } from 'vue'
+
 import 'vue-router'
 
 declare module 'vue-router' {
@@ -5,8 +7,6 @@ declare module 'vue-router' {
         documentTitle?: string
     }
 }
-
-import { DefineComponent } from 'vue'
 declare global {
     type AnyObject = Record<any, any>
     type VueComponent = DefineComponent

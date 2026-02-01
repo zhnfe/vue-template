@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* i.i-icon{
     --un-icon: var(--icon, url(/me.png));
@@ -35,7 +35,7 @@
 }
 
 @property --home-header-height {
-    syntax: "<length>";
+    syntax: '<length>';
     initial-value: 55px;
     inherits: false;
 }

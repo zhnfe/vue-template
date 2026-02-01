@@ -554,15 +554,15 @@ export const formConfig2: DynamicItem[] = [
         options(model: any) {
             return model.assetParams?.needAnti === 1
                 ? [
-                    {
-                        label: '1',
-                        value: 1
-                    },
-                    {
-                        label: '2',
-                        value: 0
-                    }
-                ]
+                        {
+                            label: '1',
+                            value: 1
+                        },
+                        {
+                            label: '2',
+                            value: 0
+                        }
+                    ]
                 : []
         }
     },

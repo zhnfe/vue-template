@@ -36,7 +36,7 @@ export const menus: Menu[] = [
     }
 ]
 
-export const getMenuPath = (menus: Menu[], targetUrl: string) => {
+export function getMenuPath(menus: Menu[], targetUrl: string) {
     let path: Menu[] = []
     const _findPath = (menuList: Menu[], currentPath: Menu[]) => {
         for (const menu of menuList) {

@@ -2,16 +2,16 @@
     <div class="w-100 mt-80 m-auto">
         <div class="mb-5 flex gap-x-3">
             <n-input
-                type="text"
                 v-model:value="newComment"
+                type="text"
                 @keydown.enter="handleAdd"
             />
             <n-button @click="handleAdd">添加</n-button>
         </div>
         <div class="bg-red-400 overflow-hidden cursor-pointer">
             <div
-                class="transition-all duration-300"
                 ref="box"
+                class="transition-all duration-300"
                 @click="handleBoxClick"
                 @transitionend="handleTransitionEnd"
             >
@@ -20,7 +20,7 @@
                     :key="index"
                     class="py-2"
                 >
-                    <div class="p-3 border-1 rounded-lg">
+                    <div class="p-3 border rounded-lg">
                         <div class="line-clamp-2 ">{{ index % data.length }}. {{ item.text }}</div>
                     </div>
                 </div>
@@ -48,6 +48,8 @@ const data = reactive([
 const newComment = ref('')
 let i = 0
 let stop = false
+const box = useTemplateRef('box')
+
 const handleAdd = () => {
     if (newComment.value && box.value) {
         data.unshift({ text: newComment.value })
@@ -61,7 +63,6 @@ const handleAdd = () => {
     }
 }
 const handleBoxClick = () => {
-    console.log(i)
     if (stop) {
         return
     }
@@ -71,10 +72,24 @@ const handleBoxClick = () => {
     }, 5000)
 }
 const handleTransitionEnd = () => {
-    console.log('end')
+    // console.log('end')
 }
-const box = useTemplateRef('box')
+
 const getItems = () => Array.from(box.value?.children || []) as HTMLDivElement[]
+
+const layout = () => {
+    if (!box.value) {
+        return
+    }
+    const next = i + 1
+    const els = getItems()
+    const height = els.slice(next, next + 3).reduce((sum, cur) => sum + cur.getBoundingClientRect().height, 0)
+    const translateY = els.slice(0, next).reduce((sum, cur) => sum + cur.getBoundingClientRect().height, 0)
+    box.value.style.transform = `translateY(-${translateY}px)`
+    box.value.style.transition = ''
+    box.value.style.height = `${height}px`
+    i++
+}
 onMounted(() => {
     if (!box.value) {
         return
@@ -94,17 +109,4 @@ onMounted(() => {
         layout()
     }, 1000)
 })
-const layout = () => {
-    if (!box.value) {
-        return
-    }
-    const next = i + 1
-    const els = getItems()
-    const height = els.slice(next, next + 3).reduce((sum, cur) => sum + cur.getBoundingClientRect().height, 0)
-    const translateY = els.slice(0, next).reduce((sum, cur) => sum + cur.getBoundingClientRect().height, 0)
-    box.value.style.transform = `translateY(-${translateY}px)`
-    box.value.style.transition = ''
-    box.value.style.height = `${height}px`
-    i++
-}
 </script>

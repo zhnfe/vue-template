@@ -3,7 +3,7 @@
 
     <h2 class="text-xl my-2">User Form</h2>
     <div class="flex">
-        <user-form message="sssss" class="flex-1" />
+        <UserForm message="sssss" class="flex-1" />
         <pre>{{ JSON.stringify(model, null, 2) }}</pre>
     </div>
 </template>
@@ -57,7 +57,8 @@ const { DynamicForm: UserForm, model } = useDynamicFormData({
             ]
         }
     ],
-    onSubmit: async data => {
+    onSubmit: async (data) => {
+        // eslint-disable-next-line no-console
         console.log(JSON.stringify(data, null, 2))
     }
 })

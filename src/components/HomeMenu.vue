@@ -3,7 +3,7 @@
         class="border-r shrink-0 border-gray-200 relative transition-all duration-300"
         :class="{
             'w-12': collapsed,
-            'w-65': !collapsed
+            'w-65': !collapsed,
         }"
     >
         <div
@@ -29,14 +29,16 @@
 </template>
 
 <script lang="tsx" setup>
-import { ref, type VNode } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
-import { getMenuPath, menus } from '@/config/menu'
 import type { MenuMixedOption } from 'naive-ui/es/menu/src/interface'
-import IconHome from '~vic/IconHome'
-import IconDeployedCodeFill from '~vic/IconDeployedCodeFill'
-import IconTerminal from '~vic/IconTerminal'
+import type { VNode } from 'vue'
+import { ref } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import IconDeployedCode from '~vic/IconDeployedCode'
+import IconDeployedCodeFill from '~vic/IconDeployedCodeFill'
+import IconHome from '~vic/IconHome'
+import IconTerminal from '~vic/IconTerminal'
+import { getMenuPath, menus } from '@/config/menu'
+
 interface MenuItem {
     pid: number
     title: string
@@ -59,14 +61,14 @@ const activeKey = ref(routeName)
 const collapsed = ref(window.innerWidth <= 950)
 
 const iconMap: Record<string, VNode> = {
-    home: <IconHome />,
+    'home': <IconHome />,
     'cube-transparent': <IconDeployedCodeFill />,
     'command-line': <IconTerminal />,
-    default: <IconDeployedCode />
+    'default': <IconDeployedCode />
 }
 
 const dealMenu = (menus: MenuItem[]): MenuMixedOption[] => {
-    return menus.map(item => {
+    return menus.map((item) => {
         return {
             label: item.url && !item.children
                 ? () => <RouterLink to={{ name: item.url }}>{item.title}</RouterLink>
@@ -79,5 +81,4 @@ const dealMenu = (menus: MenuItem[]): MenuMixedOption[] => {
 }
 
 const menuOptions = dealMenu(menus as MenuItem[])
-
 </script>
