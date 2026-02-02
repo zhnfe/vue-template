@@ -13,6 +13,7 @@
     "include": [
         "vite.config.*",
         "eslint.config.*",
-        "plugins/*"
+        "plugins/*",
+        "scripts/*"
     ]
 }

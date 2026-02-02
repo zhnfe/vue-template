@@ -15,7 +15,8 @@ export default antfu(
         rules: {
             'style/comma-dangle': ['error', 'never'],
             'antfu/if-newline': 'off',
-            'yaml/indent': ['error', 2]
+            'yaml/indent': ['error', 2],
+            'node/prefer-global/process': 'off'
         }
     },
     {
